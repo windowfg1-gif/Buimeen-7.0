@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Buimeen">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffe9c7">
+<link rel="apple-touch-icon" id="touchIcon" href="">
+<title>Buimeen</title>
+<style>
+  :root{--bg1:#fff1d6;--bg2:#e3f6ec;--card:#ffffff;--text:#3a3550;--muted:#8a849c;--green:#43b97f;--peach:#ffa56b;--grey:#ece8f3;--accent:#ff7a8a;--accent2:#7c6cf0;--warm:#fff6e5;--gold:#e8a93c}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;min-height:100vh;font-family:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;background:linear-gradient(160deg,var(--bg1),var(--bg2)) fixed;color:var(--text);line-height:1.45;touch-action:manipulation;
+       padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  .wrap{max-width:520px;margin:0 auto;padding:12px 14px calc(86px + env(safe-area-inset-bottom))}
+  body.locked .wrap,body.locked #bnav{display:none}
+  .card{background:var(--card);border-radius:26px;padding:20px 18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(124,108,240,.10);position:relative}
+  h1{font-size:1.65rem;margin:6px 0 4px;text-align:center}
+  .paws{text-align:center;font-size:1.1rem;letter-spacing:6px;opacity:.7;margin-bottom:12px}
+  h2{font-size:1.12rem;margin:0 0 10px}
+  .divider{text-align:center;font-weight:800;color:var(--accent2);margin:22px 0 12px;font-size:1.02rem;letter-spacing:1px}
+  .hero{text-align:center;background:linear-gradient(180deg,#fffaf0,#f1fbf5);overflow:hidden;padding-top:26px}
+  .duo{display:flex;align-items:flex-end;justify-content:center;gap:0;padding:0 2px}
+  .buddy{width:21%;max-width:88px;cursor:pointer;user-select:none;-webkit-user-select:none}
+  .buddy svg{width:100%;height:auto;display:block;overflow:visible}
+  .me{width:30%;max-width:125px;cursor:pointer;user-select:none;-webkit-user-select:none}
+  .me svg{width:100%;height:auto;display:block;overflow:visible}
+  .dog{display:block;width:49%;max-width:210px;cursor:pointer;user-select:none;-webkit-user-select:none}
+  .dog svg{width:100%;height:auto;display:block;overflow:visible}
+  #gHead{transform-origin:150px 170px;animation:tilt 4.5s ease-in-out infinite}
+  @keyframes tilt{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+  #gTongue{transform-box:fill-box;transform-origin:50% 0%;animation:pant 1.1s ease-in-out infinite}
+  @keyframes pant{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.07)}}
+  .bounce{animation:hop .6s ease 3}
+  @keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  .name{font-size:1.15rem;font-weight:800;margin-top:6px}
+  .buddycap{font-weight:800;color:var(--accent2);font-size:.9rem;margin-top:2px}
+  .pack{font-size:1.5rem;min-height:1.9rem;margin-top:4px;letter-spacing:2px}
+  .big{font-size:3.6rem;font-weight:800;color:var(--green);line-height:1.1}
+  .big.zero{color:var(--accent2)}
+  .sub{color:var(--muted);font-size:.92rem;margin-top:2px}
+  .msg{margin-top:10px;font-size:1.02rem;font-weight:700}
+  .xpbox{margin:14px auto 0;max-width:300px;text-align:left}
+  .xpt{display:flex;justify-content:space-between;font-size:.86rem;font-weight:800;color:var(--accent2)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 8px;text-align:center}
+  .stat{background:#faf7ff;border-radius:16px;padding:10px 2px}
+  .stat b{display:block;font-size:1.4rem;color:var(--accent2)}
+  .stat span{font-size:.74rem;color:var(--muted)}
+  label.chk{display:flex;gap:12px;align-items:center;padding:14px 12px;min-height:58px;border:2px solid var(--grey);border-radius:16px;margin-bottom:8px;cursor:pointer;font-size:1.02rem}
+  label.chk input{width:28px;height:28px;flex:none;accent-color:var(--green)}
+  label.chk small{display:block;color:var(--muted)}
+  .core{border-color:#bfe8d3;background:#f4fcf8}
+  label.mini{display:flex;gap:10px;align-items:center;padding:10px 10px;min-height:48px;border:2px solid var(--grey);border-radius:14px;margin-bottom:6px;cursor:pointer;font-size:.95rem;font-weight:700}
+  label.mini input{width:24px;height:24px;flex:none;accent-color:var(--accent2)}
+  label.mini small{display:block;color:var(--muted);font-weight:600;font-size:.78rem}
+  .who{border-color:#d9d0f5;background:#f8f5ff}
+  .halts{border-color:#ffe0c4;background:#fffaf2}
+  .sc{border-color:#cfe9db;background:#f6fcf9}
+  .tipbox{background:#fff4e8;border:2px dashed #ffd9a3;border-radius:14px;padding:10px 12px;font-size:.9rem;margin:6px 0 10px;display:none;white-space:pre-wrap}
+  .row{display:flex;gap:10px;align-items:center;margin:12px 0}
+  .row label{min-width:112px;font-size:.94rem}
+  input[type=range]{flex:1;height:34px;accent-color:var(--accent2)}
+  input[type=date],input[type=text],select,textarea{width:100%;padding:12px;border:2px solid var(--grey);border-radius:14px;font:inherit;font-size:16px;background:#fff;color:var(--text);min-height:50px}
+  input[type=text]{margin-bottom:8px}
+  textarea{resize:vertical;min-height:76px}
+  .section-title{font-weight:800;margin:18px 0 6px}
+  button{font:inherit;font-weight:800;border:0;border-radius:16px;padding:13px 18px;min-height:50px;background:linear-gradient(135deg,var(--accent),#ff9a76);color:#fff;cursor:pointer}
+  button:active{transform:scale(.97)}
+  button.sec{background:var(--grey);color:var(--text)}
+  button.danger{background:transparent;color:#d26a6a;padding:4px 8px;min-height:38px;font-weight:700}
+  button:disabled{opacity:.45}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .cell{aspect-ratio:1;border-radius:50%;background:var(--grey);font-size:.8rem;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-weight:800}
+  .cell.ok{background:var(--green);font-size:1.1rem}
+  .cell.slip{background:var(--peach)}
+  .cell.none{color:var(--muted)}
+  .cell.now{outline:3px solid var(--accent2);outline-offset:1px}
+  .legend{font-size:.8rem;color:var(--muted);margin-top:10px}
+  .hist{border-top:2px dashed var(--grey);padding:10px 0}
+  .hist:first-child{border-top:0}
+  .hist .top{display:flex;justify-content:space-between;align-items:center}
+  .tag{font-size:.76rem;padding:2px 10px;border-radius:20px;color:#fff}
+  .tag.ok{background:var(--green)} .tag.slip{background:var(--peach)}
+  .meta{font-size:.86rem;color:var(--muted)}
+  .note{font-size:.94rem;margin-top:4px;white-space:pre-wrap}
+  .jrnl{font-size:.92rem;margin-top:4px;white-space:pre-wrap;font-style:italic;background:#faf7ff;border-radius:10px;padding:8px 10px}
+  .grat{font-size:.96rem;margin-top:4px}
+  .safety{background:var(--warm);font-size:.96rem}
+  .reminder{background:#fff0f2;font-size:.96rem;display:none}
+  .random{background:#f3f0ff;border-radius:14px;padding:12px;margin-top:10px;font-size:.96rem;display:none}
+  details summary{cursor:pointer;font-weight:800;margin-bottom:8px;min-height:34px}
+  .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#3a3550;color:#fff;padding:12px 18px;border-radius:16px;opacity:0;transition:.3s;pointer-events:none;max-width:90%;z-index:40;text-align:center}
+  .toast.show{opacity:1}
+  .conf{position:fixed;top:-50px;font-size:2rem;animation:fall 2.8s ease-in forwards;pointer-events:none;z-index:90}
+  @keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+
+  .bones{font-size:1.5rem;font-weight:800;color:var(--gold)}
+  .bar{height:12px;background:var(--grey);border-radius:8px;overflow:hidden;margin:4px 0 2px}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#8fe0b6);border-radius:8px;transition:width .4s}
+  .quest{margin-bottom:12px}
+  .quest .qt{display:flex;justify-content:space-between;font-size:.95rem;font-weight:700}
+  .quest .qt span{color:var(--muted)}
+  .quest.done .qt{color:var(--green)}
+  .dq{display:flex;align-items:center;gap:10px;padding:11px 6px;border-bottom:2px dashed var(--grey);font-size:.95rem;font-weight:700}
+  .dq .db{margin-left:auto;color:var(--muted);font-weight:800;font-size:.85rem;flex:none}
+  .dq.on,.dq.on .db{color:var(--green)}
+  .gift{display:flex;align-items:center;gap:12px;padding:10px 12px;border:2px solid var(--grey);border-radius:16px;margin-bottom:8px}
+  .gift.locked{opacity:.55}
+  .gift.ready{border-color:#ffd9a3;background:#fff8ec;animation:glowp 2s ease-in-out infinite}
+  @keyframes glowp{0%,100%{box-shadow:0 0 0 rgba(232,169,60,0)}50%{box-shadow:0 0 14px rgba(232,169,60,.45)}}
+  .gift .gi{font-size:1.7rem;flex:none}
+  .gift .gb{flex:1}
+  .gift b{display:block;font-size:.96rem}
+  .gift span{font-size:.8rem;color:var(--muted)}
+  .gift button{min-height:42px;padding:8px 14px}
+  .giftbanner{background:#fff8ec;border:2px dashed #ffd9a3}
+  .pal{display:flex;gap:12px;align-items:center;padding:9px 4px;border-top:2px dashed var(--grey);cursor:pointer;border-radius:12px}
+  .pal:first-child{border-top:0}
+  .pal:active{background:#faf7ff}
+  .pal .av{font-size:1.9rem;flex:none;width:48px;text-align:center}
+  .pal b{display:block;font-size:.98rem}
+  .pal span{font-size:.84rem;color:var(--muted)}
+  .shopitem{display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid var(--grey);border-radius:14px;margin-bottom:8px}
+  .shopitem .si{font-size:1.5rem;flex:none}
+  .shopitem .sb{flex:1;font-size:.95rem;font-weight:700}
+  .shopitem .sb small{display:block;color:var(--muted);font-weight:600}
+  .shopitem button{min-height:40px;padding:7px 14px}
+  .shopitem button.on{background:linear-gradient(135deg,var(--green),#7ad6a6)}
+  .scene{background:#f1fbf5;border-radius:16px;padding:14px;margin-bottom:10px;text-align:center}
+  .scene .art{font-size:1.7rem;letter-spacing:4px;line-height:1.7}
+  .scene .cap{font-size:.88rem;color:var(--muted);margin-top:4px}
+
+  /* mini game styles */
+  .gcircle{width:130px;height:130px;margin:14px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bfe8d3,#43b97f);transform:scale(.75)}
+  .sortgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .gthought{background:#faf7ff;color:var(--text);border:2px solid var(--grey);min-height:62px;font-size:.84rem;padding:8px;font-weight:700}
+  .gthought.good{background:#e7f8ef;border-color:var(--green)}
+  .gthought.bad{background:#f3f0f5;opacity:.55;text-decoration:line-through}
+  .memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .memcard{min-height:64px;font-size:1.6rem;background:#7c6cf0;border-radius:14px;color:#fff;padding:0}
+  .memcard.up{background:#faf7ff}
+  .memcard.ok{background:#e7f8ef;border:2px solid var(--green)}
+  .wordgrid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .wletter{min-width:44px;min-height:50px;font-size:1.1rem;background:#fff4e0;color:var(--text);border:2px solid #ffd9a3;padding:0 8px}
+  .ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .gcell{min-height:64px;font-size:1.7rem;background:#faf7ff;color:var(--text);border:2px solid var(--grey);padding:0}
+
+  #modal{position:fixed;inset:0;background:rgba(58,53,80,.5);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  #modal.show{display:flex}
+  #modalCard{background:#fff;border-radius:26px;padding:24px 20px;max-width:430px;width:100%;max-height:82vh;overflow:auto;text-align:center}
+  #modalCard .mi{font-size:3rem}
+  #modalCard h3{margin:8px 0 10px}
+  #modalCard .body{text-align:left;white-space:pre-wrap;font-size:1rem;background:#faf7ff;border-radius:16px;padding:14px}
+  #wardModal{position:fixed;inset:0;background:rgba(58,53,80,.5);display:none;align-items:center;justify-content:center;z-index:65;padding:14px}
+  #wardModal.show{display:flex}
+  #wardCard{background:#fff;border-radius:26px;padding:18px 16px;max-width:430px;width:100%;max-height:86vh;overflow:auto}
+  .wtabs{display:flex;gap:6px}
+  .wtabs button{flex:1;min-height:44px;padding:6px 4px;font-size:.82rem}
+  #charModal{position:fixed;inset:0;background:rgba(58,53,80,.55);display:none;align-items:center;justify-content:center;z-index:70;padding:16px}
+  #charModal.show{display:flex}
+  #charCard{background:linear-gradient(180deg,#fffaf0,#e9f7ef);border-radius:26px;padding:20px 18px;max-width:360px;width:100%;max-height:90vh;overflow:auto;text-align:center}
+  .bubble{position:relative;background:#fff;border-radius:18px;padding:14px 16px;font-weight:700;font-size:1rem;box-shadow:0 4px 12px rgba(124,108,240,.15);margin-bottom:18px;white-space:pre-wrap;text-align:left}
+  .bubble:after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);border:11px solid transparent;border-top-color:#fff;border-bottom:0}
+  #charArt{display:flex;justify-content:center}
+  #charArt svg{height:34vh;max-width:100%}
+  .charname{font-weight:800;font-size:1.1rem;margin-top:10px}
+  .charinfo{color:var(--muted);font-size:.86rem;margin-bottom:6px}
+  #annikkaBox{background:#fff0f4;border:2px solid #ffd3de;border-radius:14px;padding:12px;margin-top:10px;font-size:.95rem;display:none;white-space:pre-wrap}
+
+  #bnav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.93);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 -2px 12px rgba(124,108,240,.15);z-index:30}
+  #bnav button{flex:1;min-height:46px;padding:8px;background:var(--grey);color:var(--text);font-size:.9rem}
+
+  #lock{position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;background:linear-gradient(160deg,var(--bg1),var(--bg2));
+        display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;
+        padding-top:calc(20px + env(safe-area-inset-top));padding-bottom:calc(20px + env(safe-area-inset-bottom))}
+  #lock.hide{display:none}
+  #lock .face{font-size:4.2rem;line-height:1}
+  #dots{display:flex;gap:16px;justify-content:center;margin:18px 0 8px}
+  #dots i{display:block;width:18px;height:18px;border-radius:50%;border:2px solid var(--accent2)}
+  #dots i.on{background:var(--accent2)}
+  #dots.shake{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-12px)}40%{transform:translateX(12px)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}}
+  #lockMsg{min-height:1.4rem;font-weight:700;color:var(--accent2);font-size:.95rem}
+  #pad{display:grid;grid-template-columns:repeat(3,78px);gap:14px;margin-top:14px}
+  #pad button{width:78px;height:78px;min-height:78px;border-radius:50%;padding:0;font-size:1.7rem;background:#fff;color:var(--text);box-shadow:0 3px 10px rgba(124,108,240,.15)}
+  #pad button.blank{visibility:hidden}
+  #pad button.del{background:transparent;box-shadow:none;font-size:1.5rem}
+</style>
+</head>
+<body class="locked">
+
+<div id="lock">
+  <div class="face">🐶</div>
+  <h1>Buimeen</h1>
+  <div class="sub" id="lockSub">Enter your passcode</div>
+  <div id="dots"><i></i><i></i><i></i><i></i></div>
+  <div id="lockMsg"></div>
+  <div id="pad"></div>
+</div>
+
+<div id="modal">
+  <div id="modalCard">
+    <div class="mi" id="modalIcon">🎁</div>
+    <h3 id="modalTitle"></h3>
+    <div class="body" id="modalBody"></div>
+    <div class="btns" style="justify-content:center"><button id="modalClose">Close 💛</button></div>
+  </div>
+</div>
+
+<div id="charModal">
+  <div id="charCard">
+    <div class="bubble" id="charBubble"></div>
+    <div id="charArt"></div>
+    <div class="charname" id="charName"></div>
+    <div class="charinfo" id="charInfo"></div>
+    <div class="btns" style="justify-content:center"><button id="charClose">Close 💛</button></div>
+  </div>
+</div>
+
+<div id="wardModal">
+  <div id="wardCard">
+    <h2 style="text-align:center">🛍️ Pack wardrobe</h2>
+    <div class="wtabs">
+      <button id="tabDog">🐶 Buimeen</button>
+      <button id="tabMe" class="sec">🧑🏻 You</button>
+      <button id="tabJames" class="sec">😊 James</button>
+      <button id="tabAnnikka" class="sec">💁🏻‍♀️ Annikka</button>
+    </div>
+    <div class="meta" id="wardBones" style="margin:10px 0 0;text-align:center;font-weight:800"></div>
+    <div id="shop"></div>
+    <div class="btns" style="justify-content:center"><button class="sec" id="wardClose">Done 💛</button></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1>🐶 Buimeen 🦴</h1>
+  <div class="paws">🐾 🐾 🐾 🐾 🐾</div>
+
+  <div class="card reminder" id="reminder">
+    <b>🦴 Time to save a backup.</b> <span id="reminderText"></span>
+    <div class="btns"><button id="reminderBtn">Save backup now</button></div>
+  </div>
+
+  <div class="card giftbanner" id="giftBanner" style="display:none">
+    <b id="giftBannerText">🎁 You have a gift waiting from the pack!</b>
+    <div class="btns"><button id="giftBannerBtn">Open it</button></div>
+  </div>
+
+  <div class="card hero">
+    <span style="position:absolute;left:14px;top:12px;font-size:1.7rem">🦴</span>
+    <span style="position:absolute;right:14px;top:12px;font-size:1.7rem">🎾</span>
+    <div class="duo">
+      <div class="buddy" id="buddy"></div>
+      <div class="me" id="me">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 300" role="img" aria-label="You, standing next to Buimeen">
+          <g id="uCape" display="none">
+            <path d="M70 152 Q40 230 64 272 L156 272 Q180 230 150 152 Q110 176 70 152Z" fill="#e5484d"/>
+            <path d="M70 152 Q110 176 150 152" stroke="#c93338" stroke-width="4" fill="none"/>
+          </g>
+          <rect x="84" y="232" width="18" height="46" rx="8" fill="#4a4066"/>
+          <rect x="118" y="232" width="18" height="46" rx="8" fill="#4a4066"/>
+          <ellipse cx="92" cy="282" rx="17" ry="9" fill="#3a3550"/>
+          <ellipse cx="128" cy="282" rx="17" ry="9" fill="#3a3550"/>
+          <path d="M72 158 Q64 246 88 250 L132 250 Q156 246 148 158 Q110 140 72 158Z" fill="#7c6cf0"/>
+          <path d="M90 206 h40 v18 q-20 9 -40 0Z" fill="#6a59e0"/>
+          <path d="M74 166 Q52 198 62 224" stroke="#7c6cf0" stroke-width="15" fill="none" stroke-linecap="round"/>
+          <path d="M146 166 Q168 198 158 224" stroke="#7c6cf0" stroke-width="15" fill="none" stroke-linecap="round"/>
+          <circle cx="61" cy="226" r="8" fill="#f6cfa4"/>
+          <circle cx="159" cy="226" r="8" fill="#f6cfa4"/>
+          <g id="uMedal" display="none">
+            <path d="M100 152 L110 178 L120 152 Z" fill="#e5484d"/>
+            <circle cx="110" cy="186" r="14" fill="#ffd23f" stroke="#e0a800" stroke-width="3"/>
+            <path d="M110 178 l3 6 6 1 -4 4 1 6 -6 -3 -6 3 1 -6 -4 -4 6 -1Z" fill="#c98a1e"/>
+          </g>
+          <g id="uScarf" display="none">
+            <path d="M76 148 Q110 168 144 148 L144 164 Q110 186 76 164Z" fill="#43b97f"/>
+            <rect x="122" y="160" width="14" height="32" rx="6" fill="#43b97f"/>
+            <path d="M124 188 l3 7 M132 189 l3 7" stroke="#2a8a5a" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <rect x="99" y="146" width="22" height="14" rx="7" fill="#f6cfa4"/>
+          <circle cx="110" cy="106" r="46" fill="#f6cfa4"/>
+          <path d="M64 102 Q64 56 110 54 Q156 56 156 102 Q148 78 124 76 Q132 92 124 96 Q114 72 88 80 Q70 86 64 102Z" fill="#3b2a20"/>
+          <circle cx="64" cy="110" r="7" fill="#f6cfa4"/>
+          <circle cx="156" cy="110" r="7" fill="#f6cfa4"/>
+          <path d="M84 96 q10 -5 18 0 M118 96 q10 -5 18 0" stroke="#3b2a20" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="93" cy="108" r="5" fill="#2b1810"/><circle cx="127" cy="108" r="5" fill="#2b1810"/>
+          <circle cx="95" cy="106" r="1.8" fill="#fff"/><circle cx="129" cy="106" r="1.8" fill="#fff"/>
+          <circle cx="82" cy="122" r="6" fill="#ff8fa0" opacity=".35"/><circle cx="138" cy="122" r="6" fill="#ff8fa0" opacity=".35"/>
+          <path d="M96 127 Q110 139 124 127" stroke="#9c4a52" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <g id="uShades" display="none">
+            <rect x="76" y="98" width="30" height="21" rx="9" fill="#2b2b2b"/>
+            <rect x="114" y="98" width="30" height="21" rx="9" fill="#2b2b2b"/>
+            <path d="M106 107 h8" stroke="#2b2b2b" stroke-width="5"/>
+            <path d="M76 104 L64 98 M144 104 L156 98" stroke="#2b2b2b" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <g id="uHeadph" display="none">
+            <path d="M64 96 Q64 46 110 44 Q156 46 156 96" stroke="#3a3550" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <rect x="55" y="94" width="17" height="28" rx="8" fill="#ff7a8a"/>
+            <rect x="148" y="94" width="17" height="28" rx="8" fill="#ff7a8a"/>
+          </g>
+          <g id="uCap" display="none">
+            <path d="M66 88 Q68 50 110 48 Q152 50 154 88 Q110 76 66 88Z" fill="#ff7a8a"/>
+            <path d="M148 84 Q186 86 184 98 Q150 94 144 90Z" fill="#e5607a"/>
+            <circle cx="110" cy="50" r="6" fill="#e5607a"/>
+          </g>
+          <g id="uCrown" display="none">
+            <path d="M76 66 L82 30 L98 52 L110 22 L122 52 L138 30 L144 66 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="110" cy="34" r="4.5" fill="#ff7a8a"/>
+          </g>
+        </svg>
+      </div>
+      <div class="dog" id="dog">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 310" role="img" aria-label="Buimeen the smiling golden retriever">
+        <g id="gDogCape" display="none">
+          <path d="M74 206 Q30 250 56 300 Q110 282 150 292 Q190 282 244 300 Q270 250 226 206 Q150 246 74 206Z" fill="#e5484d"/>
+          <path d="M74 206 Q150 246 226 206" stroke="#c93338" stroke-width="5" fill="none"/>
+        </g>
+        <path d="M58 188 C46 240 78 282 110 292 L120 278 L132 298 L150 284 L168 298 L180 278 L190 292 C222 282 254 240 242 188 Z" fill="#e1aa57"/>
+        <path d="M104 244 L120 278 L132 298 L150 284 L168 298 L180 278 L196 244 Z" fill="#f7e2b2"/>
+        <g id="gBoneNeck" display="none">
+          <path d="M98 232 Q150 262 202 232" stroke="#8b5a2b" stroke-width="5" fill="none"/>
+          <rect x="138" y="252" width="24" height="9" rx="4" fill="#fff" stroke="#d9c9a8" stroke-width="2"/>
+          <circle cx="138" cy="252" r="5" fill="#fff" stroke="#d9c9a8" stroke-width="2"/>
+          <circle cx="138" cy="261" r="5" fill="#fff" stroke="#d9c9a8" stroke-width="2"/>
+          <circle cx="162" cy="252" r="5" fill="#fff" stroke="#d9c9a8" stroke-width="2"/>
+          <circle cx="162" cy="261" r="5" fill="#fff" stroke="#d9c9a8" stroke-width="2"/>
+        </g>
+        <g id="accScarf" display="none">
+          <path d="M86 234 Q150 266 214 234 L214 254 Q150 288 86 254 Z" fill="#43b97f"/>
+          <rect x="176" y="248" width="20" height="42" rx="8" fill="#43b97f"/>
+          <path d="M176 284 l4 8 M186 286 l4 8" stroke="#2a8a5a" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g id="gBandana" display="none">
+          <path id="bandMain" d="M84 222 Q150 262 216 222 L150 300 Z" fill="#e5484d"/>
+          <path id="bandEdge" d="M84 222 Q150 262 216 222" stroke="#c93338" stroke-width="4" fill="none"/>
+          <circle cx="122" cy="248" r="4" fill="#fff"/><circle cx="178" cy="248" r="4" fill="#fff"/><circle cx="150" cy="274" r="4" fill="#fff"/>
+        </g>
+        <g id="accBow" display="none">
+          <path d="M150 262 L118 246 L118 278 Z" fill="#ff7a8a"/>
+          <path d="M150 262 L182 246 L182 278 Z" fill="#ff7a8a"/>
+          <circle cx="150" cy="262" r="9" fill="#e5484d"/>
+        </g>
+        <g id="accBall" display="none">
+          <circle cx="259" cy="281" r="22" fill="#d7f251" stroke="#b7cf33" stroke-width="2"/>
+          <path d="M241 269 Q259 281 241 295 M277 269 Q259 281 277 295" stroke="#fff" stroke-width="3" fill="none"/>
+        </g>
+        <g id="gHead">
+          <path d="M74 70 C30 64 12 140 34 202 C46 234 82 218 92 170 C100 130 102 90 74 70Z" fill="#c98d3a"/>
+          <path d="M226 70 C270 64 288 140 266 202 C254 234 218 218 208 170 C200 130 198 90 226 70Z" fill="#c98d3a"/>
+          <path d="M60 92 C48 128 48 170 58 198" stroke="#b27726" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M240 92 C252 128 252 170 242 198" stroke="#b27726" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="150" cy="140" rx="84" ry="86" fill="#eebd6a"/>
+          <path d="M70 160 Q62 176 70 192 Q80 184 84 172Z" fill="#eebd6a"/>
+          <path d="M230 160 Q238 176 230 192 Q220 184 216 172Z" fill="#eebd6a"/>
+          <path d="M150 56 C138 76 140 96 150 108 C160 96 162 76 150 56Z" fill="#f6d98c"/>
+          <path d="M96 76 Q108 66 122 74" stroke="#d99a38" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M204 76 Q192 66 178 74" stroke="#d99a38" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="150" cy="178" rx="48" ry="38" fill="#f9e6b9"/>
+          <circle cx="82" cy="164" r="11" fill="#ff8fa0" opacity=".35"/>
+          <circle cx="218" cy="164" r="11" fill="#ff8fa0" opacity=".35"/>
+          <path d="M88 100 Q108 86 128 98" stroke="#b98332" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <path d="M172 98 Q192 86 212 100" stroke="#b98332" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="108" cy="128" rx="16" ry="18" fill="#2b1810"/>
+          <ellipse cx="192" cy="128" rx="16" ry="18" fill="#2b1810"/>
+          <circle cx="114" cy="120" r="6.5" fill="#fff"/><circle cx="198" cy="120" r="6.5" fill="#fff"/>
+          <circle cx="102" cy="136" r="3" fill="#fff"/><circle cx="186" cy="136" r="3" fill="#fff"/>
+          <path d="M88 150 Q108 130 128 150 Q108 154 88 150Z" fill="#eebd6a"/>
+          <path d="M172 150 Q192 130 212 150 Q192 154 172 150Z" fill="#eebd6a"/>
+          <path d="M90 148 Q108 133 126 148" stroke="#d99a38" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M174 148 Q192 133 210 148" stroke="#d99a38" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <g id="accShades" display="none">
+            <rect x="84" y="110" width="50" height="32" rx="13" fill="#2b2b2b"/>
+            <rect x="166" y="110" width="50" height="32" rx="13" fill="#2b2b2b"/>
+            <path d="M134 122 L166 122" stroke="#2b2b2b" stroke-width="6"/>
+            <path d="M84 120 L64 110 M216 120 L236 110" stroke="#2b2b2b" stroke-width="6" stroke-linecap="round"/>
+            <path d="M94 118 q8 -6 16 0" stroke="#6a6a6a" stroke-width="3" fill="none"/>
+            <path d="M176 118 q8 -6 16 0" stroke="#6a6a6a" stroke-width="3" fill="none"/>
+          </g>
+          <g id="gHeartG" display="none">
+            <path d="M88 122 q0 -14 11 -14 q9 0 9 9 q0 -9 9 -9 q11 0 11 14 q0 12 -20 26 q-20 -14 -20 -26Z" fill="#ff4d6d" opacity=".9"/>
+            <path d="M172 122 q0 -14 11 -14 q9 0 9 9 q0 -9 9 -9 q11 0 11 14 q0 12 -20 26 q-20 -14 -20 -26Z" fill="#ff4d6d" opacity=".9"/>
+            <path d="M128 124 h44" stroke="#ff4d6d" stroke-width="5"/>
+            <path d="M88 124 L64 114 M212 124 L236 114" stroke="#ff4d6d" stroke-width="5" stroke-linecap="round"/>
+          </g>
+          <path d="M106 186 Q150 200 194 186 Q192 240 150 242 Q108 240 106 186Z" fill="#7d2c33"/>
+          <g id="gTongue">
+            <path d="M126 212 Q150 270 174 212 Q150 202 126 212Z" fill="#f3909f"/>
+            <path d="M150 214 L150 242" stroke="#d9707f" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <path d="M106 186 Q94 186 90 172" stroke="#3a2414" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M194 186 Q206 186 210 172" stroke="#3a2414" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M126 152 Q150 138 174 152 Q172 174 150 178 Q128 174 126 152Z" fill="#2a1a14"/>
+          <ellipse cx="138" cy="152" rx="8" ry="3" fill="#fff" opacity=".35"/>
+          <path d="M150 178 L150 190" stroke="#2a1a14" stroke-width="3.5" stroke-linecap="round"/>
+          <g id="gCrown" display="none">
+            <path d="M108 66 L116 26 L134 50 L150 16 L166 50 L184 26 L192 66 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="150" cy="32" r="4.5" fill="#ff7a8a"/>
+          </g>
+          <g id="accHat" display="none">
+            <path d="M118 64 L150 6 L182 64 Z" fill="#7c6cf0"/>
+            <path d="M126 50 L174 50" stroke="#9b8df5" stroke-width="7"/>
+            <circle cx="150" cy="6" r="8" fill="#ff7a8a"/>
+          </g>
+          <g id="gWizard" display="none">
+            <ellipse cx="150" cy="64" rx="48" ry="11" fill="#45348f"/>
+            <path d="M120 64 L150 -14 L180 64 Z" fill="#5a46e0"/>
+            <circle cx="150" cy="-14" r="7" fill="#ffd23f"/>
+            <circle cx="146" cy="20" r="4" fill="#ffd23f"/><circle cx="158" cy="38" r="3" fill="#ffd23f"/><circle cx="140" cy="46" r="3" fill="#ffd23f"/>
+          </g>
+          <g id="gFlower" display="none">
+            <circle cx="104" cy="70" r="9" fill="#ff8fb0"/><circle cx="104" cy="70" r="4" fill="#ffd23f"/>
+            <circle cx="126" cy="59" r="6" fill="#b28ff0"/><circle cx="126" cy="59" r="2.5" fill="#fff"/>
+            <circle cx="150" cy="53" r="9" fill="#ff8fb0"/><circle cx="150" cy="53" r="4" fill="#ffd23f"/>
+            <circle cx="174" cy="59" r="6" fill="#b28ff0"/><circle cx="174" cy="59" r="2.5" fill="#fff"/>
+            <circle cx="196" cy="70" r="9" fill="#ff8fb0"/><circle cx="196" cy="70" r="4" fill="#ffd23f"/>
+          </g>
+          <g id="gSmile" display="none">
+            <ellipse cx="108" cy="128" rx="19" ry="21" fill="#eebd6a"/>
+            <ellipse cx="192" cy="128" rx="19" ry="21" fill="#eebd6a"/>
+            <path d="M93 130 Q108 114 123 130" stroke="#2b1810" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <path d="M177 130 Q192 114 207 130" stroke="#2b1810" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+            <text x="48" y="100" font-size="26">💛</text>
+            <text x="228" y="100" font-size="26">💛</text>
+          </g>
+        </g>
+      </svg>
+      </div>
+    </div>
+    <div class="name">You, Buimeen & <span id="buddyName"></span> 🐾</div>
+    <div class="buddycap" id="buddyCap"></div>
+    <div class="sub">with 😊 James by your side, always · tap us!</div>
+    <div class="pack" id="pack"></div>
+    <div id="streak" class="big">0</div>
+    <div class="sub">days in a row</div>
+    <div id="message" class="msg"></div>
+    <div id="next" class="sub"></div>
+    <div class="xpbox">
+      <div class="xpt"><b id="lvlTitle">Lv 1</b><span id="xpText"></span></div>
+      <div class="bar"><i id="xpBar" style="width:0%"></i></div>
+      <div class="sub" style="font-size:.78rem">Recovery EXP — every 🦴 you earn levels you up!</div>
+    </div>
+  </div>
+
+  <!-- ===================== CHECK-IN CORNER ===================== -->
+  <div class="divider" id="checkCorner">· · · 📝 Check-in corner · · ·</div>
+
+  <div class="card" id="checkCard">
+    <h2>🐕 Today's check-in</h2>
+    <input type="date" id="date">
+    <div style="margin-top:12px">
+      <label class="chk core"><input type="checkbox" id="p1"> <div>☀️ Morning — woke up and chose today</div></label>
+      <label class="chk core"><input type="checkbox" id="p2"> <div>💧 Daytime — stayed on track</div></label>
+      <label class="chk core"><input type="checkbox" id="p3"> <div>🌙 Evening — made it through clean</div></label>
+      <div class="meta" style="margin:6px 0 12px">All three ticked = an on-track day 🦴 (+3 bones)</div>
+      <label class="chk"><input type="checkbox" id="meds"> <div>Took my daily care<small>Meds, if prescribed</small></div></label>
+      <label class="chk"><input type="checkbox" id="ate"> <div>Ate regular meals 🍲</div></label>
+      <label class="chk"><input type="checkbox" id="slept"> <div>Rested reasonably well 😴</div></label>
+    </div>
+
+    <div class="section-title">🙌 WHO check-in <span class="meta" style="font-weight:600">(all 3 = +1🦴)</span></div>
+    <label class="mini who"><input type="checkbox" id="whoW"> <div>W — Willingness<small>I'm willing to do today's work</small></div></label>
+    <label class="mini who"><input type="checkbox" id="whoH"> <div>H — Honesty<small>I'm being honest with myself & others</small></div></label>
+    <label class="mini who"><input type="checkbox" id="whoO"> <div>O — Open-mindedness<small>I'm open to help & new ways</small></div></label>
+
+    <div class="section-title">🧭 HALTS scan <span class="meta" style="font-weight:600">(tick what's true — tips appear)</span></div>
+    <label class="mini halts"><input type="checkbox" class="hOpt" id="hH"> <div>🍲 Hungry</div></label>
+    <label class="mini halts"><input type="checkbox" class="hOpt" id="hA"> <div>😤 Angry</div></label>
+    <label class="mini halts"><input type="checkbox" class="hOpt" id="hL"> <div>🫥 Lonely</div></label>
+    <label class="mini halts"><input type="checkbox" class="hOpt" id="hT"> <div>😴 Tired</div></label>
+    <label class="mini halts"><input type="checkbox" class="hOpt" id="hS"> <div>🌊 Stressed</div></label>
+    <div class="tipbox" id="haltsTip"></div>
+
+    <div class="section-title">🐕‍🦺 Self-care — pick up to 3 <span class="meta" id="scCount" style="font-weight:600">(0/3)</span></div>
+    <div class="meta" style="margin-bottom:6px">🪑 Meeting +3🦴 · 🛋️ Counselling +2 · 🧘 Meditation +2 · 🙏 Praying +2 · others +1. Yes, meeting AND counselling on the same day both count!</div>
+    <div id="scList"></div>
+    <input type="text" id="actionNote" placeholder="Notes on what you did...">
+
+    <div class="section-title">💛 3 things I'm grateful for</div>
+    <div class="meta" style="margin-bottom:6px">Numb is fine. Tiny counts: a warm meal, a text, a wagging tail. (3 = +2🦴)</div>
+    <input type="text" id="g1" placeholder="1.">
+    <input type="text" id="g2" placeholder="2.">
+    <input type="text" id="g3" placeholder="3.">
+
+    <div class="row"><label>🌊 Urge: <b id="cravVal">0</b>/10</label><input type="range" id="craving" min="0" max="10" value="0"></div>
+    <div id="annikkaBox"></div>
+    <div class="row"><label>🎭 Mood: <b id="moodVal">3</b>/5</label><input type="range" id="mood" min="1" max="5" value="3"></div>
+    <div class="meta" style="margin:-4px 0 8px">1 = very low · 3 = steady · 5 = very high or wired</div>
+
+    <div class="section-title">📓 Journal <span class="meta" style="font-weight:600">(free writing, +1🦴)</span></div>
+    <select id="feeling"></select>
+    <textarea id="journal" placeholder="Write freely — nobody reads this but you. What happened? What did it bring up? What do you need?" style="margin-top:8px"></textarea>
+
+    <div class="section-title">🗒️ Quick note</div>
+    <textarea id="note" placeholder="Short notes (what helped, who I talked to)..."></textarea>
+    <div class="btns">
+      <button id="save">Save today 🐶</button>
+      <button class="sec" id="clear">Clear this day</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🐾 Last 5 weeks</h2>
+    <div class="cal" id="cal"></div>
+    <div class="legend">🐾 = on track · Orange = tough day (not zero!) · Grey = not logged. Tap a day to edit.</div>
+  </div>
+
+  <div class="card">
+    <h2>💛 Gratitude journal</h2>
+    <div class="meta">On a numb day, old entries are proof that good things happened.</div>
+    <div class="btns">
+      <button class="sec" id="randomBtn">Show me a past one</button>
+      <button class="sec" id="exportTxt">Export as text</button>
+    </div>
+    <div class="random" id="randomBox"></div>
+    <details style="margin-top:12px"><summary>See all entries</summary><div id="gratList"></div></details>
+  </div>
+
+  <div class="card">
+    <h2>📖 History</h2>
+    <div id="history"></div>
+  </div>
+
+  <div class="card safety">
+    <h2>🚨 When the wave is too big</h2>
+    💁🏻‍♀️✨ <b>Annikka's rule:</b> you never ride a 7+ alone.<br><br>
+    1️⃣ Text or call 😊 James — <i>during</i>, not after.<br>
+    2️⃣ Cold water on your face & wrists, then 4-7-8 breathing ×4.<br>
+    3️⃣ Walk Buimeen around the block — urges peak and pass in ~20–30 min.<br>
+    4️⃣ Call your sponsor, counsellor, or go to a meeting (even online).<br>
+    5️⃣ If you're in crisis or unsafe, call your local emergency number or crisis hotline now.<br><br>
+    You have outlasted <b>every single wave</b> so far. 100% record.
+  </div>
+
+  <!-- ===================== GAME CORNER ===================== -->
+  <div class="divider" id="gameCorner">· · · 🎮 Game corner · · ·</div>
+
+  <div class="card">
+    <h2>📅 Today's quests</h2>
+    <div class="meta" style="margin-bottom:6px">Fresh every morning — now 8 of them!</div>
+    <div id="dquests"></div>
+  </div>
+
+  <div class="card" id="gameCard">
+    <h2 id="gameTitle">🎮</h2>
+    <div class="meta" id="gameDesc" style="margin-bottom:12px"></div>
+    <div id="gameArea"></div>
+    <div class="btns"><button class="sec" id="gameReplay">↺ Restart game</button></div>
+    <div class="meta" style="margin-top:8px;text-align:center">⬆️ 7.0: games are TOUGHER now — a different challenge every day! 💪</div>
+  </div>
+
+  <div class="card">
+    <h2>🦴 Bone bank</h2>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><span class="bones" id="bonesNow">0</span> <span class="sub">bones to spend</span></div>
+      <div class="meta" id="bonesTotal"></div>
+    </div>
+    <details style="margin-top:10px">
+      <summary>How do I earn bones?</summary>
+      <div class="meta">
+        ✅ Any check-in (even a tough day): +1<br>
+        🐾 On-track day: +3<br>
+        🪑 Meeting (AA/NA/CA): +3<br>
+        🛋️ Counselling / 🧘 Meditation / 🙏 Praying: +2 each<br>
+        🐕‍🦺 Other self-care: +1 each (up to 3 actions/day!)<br>
+        💛 Full 3 gratitudes: +2 (any: +1)<br>
+        🙌 WHO all three ticked: +1<br>
+        📓 Journal entry written: +1<br>
+        🍲😴 Care + meals + rest all ticked: +1<br>
+        🎮 Daily mini game: +3<br>
+        🏅 Weekly quests add brownie bonuses!<br>
+        🎁 Milestone chests: +15 up to +100!<br>
+        ⬆️ Bones are also your EXP — spending never lowers your level.<br>
+        Bones are never taken away for a tough day. Ever.
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🎯 This week's quests</h2>
+    <div class="meta" style="margin-bottom:10px">Monday to Sunday. Bonuses add automatically — past weeks count too.</div>
+    <div id="quests"></div>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Big milestone chests</h2>
+    <div class="meta" style="margin-bottom:8px">HUGE chests at <b>7, 30, 90, 180 and 365</b> total on-track days — counted forever. Tough days never reset these.</div>
+    <div id="mileList"></div>
+  </div>
+
+  <div class="card">
+    <h2>🎁 Pack gifts</h2>
+    <div class="meta" style="margin-bottom:8px">Every <b>7 on-track days</b> (counted forever — a tough day never deletes them) the pack leaves a gift.</div>
+    <div class="meta" id="giftProgressText"></div>
+    <div class="bar"><i id="giftProgressBar" style="width:0%"></i></div>
+    <div id="giftList" style="margin-top:10px"></div>
+  </div>
+
+  <div class="card">
+    <h2>🏞️ Unlocked scenes</h2>
+    <div class="meta" style="margin-bottom:8px">Moments with your people, earned one week at a time.</div>
+    <div id="sceneList"></div>
+  </div>
+
+  <div class="card">
+    <h2>🛍️ Pack wardrobe</h2>
+    <div class="meta" style="margin-bottom:6px">NEW in 7.0: dress up James & Annikka too! Their outfits unlock every <b>9 consecutive clean days</b> (best streak counts forever). 🐻 Bear onesie & 🌙 night gown are gifts — already yours!</div>
+    <div class="meta" id="wardOwned" style="margin-bottom:4px"></div>
+    <div class="btns">
+      <button id="openDogWard">🐶 Buimeen</button>
+      <button class="sec" id="openMeWard">🧑🏻 You</button>
+      <button class="sec" id="openJWard">😊 James</button>
+      <button class="sec" id="openAWard">💁🏻‍♀️ Annikka</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>👨‍👩‍👧 The Pack</h2>
+    <div class="meta" style="margin-bottom:6px">💬 Tap anyone — they pop up in person with a <b>new line every day</b> (James & Annikka wear their outfits!).</div>
+    <div id="packList"></div>
+    <div class="btns"><button class="sec" id="talkBtn">🎲 Surprise cheer from the pack</button></div>
+  </div>
+
+  <div class="card stats">
+    <div class="stat"><b id="total">0</b><span>🦴 on-track days</span></div>
+    <div class="stat"><b id="longest">0</b><span>🏆 best streak</span></div>
+    <div class="stat"><b id="logged">0</b><span>📅 days logged</span></div>
+    <div class="stat"><b id="actionDays">0</b><span>🐕‍🦺 self-care days</span></div>
+    <div class="stat"><b id="meetCount">0</b><span>🪑 meetings</span></div>
+    <div class="stat"><b id="counsCount">0</b><span>🛋️ counselling</span></div>
+  </div>
+
+  <div class="card">
+    <h2>💾 Backup & settings</h2>
+    <div class="meta" id="backupInfo"></div>
+    <div class="btns">
+      <button id="exportJson">Export backup (JSON)</button>
+      <button class="sec" id="importBtn">Import backup file</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    </div>
+    <div class="section-title">📋 Paste a backup</div>
+    <div class="meta" style="margin-bottom:6px">Paste backup text below and tap import. Works with every past format — matching days get updated.</div>
+    <textarea id="importText" placeholder='{"data":{"2026-11-01":{...}}}'></textarea>
+    <div class="btns"><button id="importPasteBtn">Import pasted text 📋</button></div>
+    <div class="btns">
+      <button class="sec" id="changePin">Change passcode</button>
+      <button class="sec" id="lockNow">Lock app 🔒</button>
+    </div>
+    <details style="margin-top:12px">
+      <summary>Danger zone</summary>
+      <div class="meta">This deletes all entries, bones, gifts and wardrobe on this device. Export a backup first.</div>
+      <div class="btns"><button class="danger" id="resetAll">Erase everything</button></div>
+    </details>
+  </div>
+
+  <div class="sub" style="text-align:center;margin-top:4px">Buimeen 7.0 · Made with 💛 for you, James & the whole pack 🐾</div>
+</div>
+
+<div id="bnav">
+  <button data-go="checkCard">📝 Check-in</button>
+  <button data-go="gameCorner">🎮 Games</button>
+  <button data-go="top">⬆️ Top</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- storage keys (unchanged — your data is safe) ---------------- */
+const K_DATA='buimeen_data', K_PIN='buimeen_pin', K_BAK='buimeen_lastBackup',
+      K_SHOP='buimeen_shop', K_GIFT='buimeen_gifts', K_LVL='buimeen_lvl', K_GAME='buimeen_game';
+
+const $=id=>document.getElementById(id);
+const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmt=s=>{const[y,m,d]=s.split('-');return new Date(y,m-1,d).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})};
+function loadJ(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
+function saveJ(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+let data=loadJ(K_DATA,{});
+let shop=loadJ(K_SHOP,{owned:[],equipped:{}});
+shop.owned=shop.owned||[];shop.equipped=shop.equipped||{};shop.freebies=shop.freebies||[];
+let gifts=loadJ(K_GIFT,{claimed:0});
+gifts.mile=gifts.mile||[];
+let gameLog=loadJ(K_GAME,{days:{}});
+gameLog.days=gameLog.days||{};
+
+/* ---------- normalize any entry (v5 / v6 / v7 formats) ---------- */
+function normEntry(e){
+  e=e||{};
+  let actions=[];
+  if(Array.isArray(e.actions))actions=e.actions.filter(Boolean).slice(0,3);
+  else if(e.actionType)actions=[e.actionType];
+  else if(e.action&&e.action.type)actions=[e.action.type];
+  return {
+    p1:!!e.p1,p2:!!e.p2,p3:!!e.p3,meds:!!e.meds,ate:!!e.ate,slept:!!e.slept,
+    actions:actions,
+    actionNote:e.actionNote||(e.action&&e.action.note)||'',
+    g1:e.g1||(e.gratitude&&e.gratitude[0])||'',
+    g2:e.g2||(e.gratitude&&e.gratitude[1])||'',
+    g3:e.g3||(e.gratitude&&e.gratitude[2])||'',
+    craving:+(e.craving||0),mood:+(e.mood||3),note:e.note||'',
+    who:{w:!!(e.who&&e.who.w),h:!!(e.who&&e.who.h),o:!!(e.who&&e.who.o)},
+    halts:{h:!!(e.halts&&e.halts.h),a:!!(e.halts&&e.halts.a),l:!!(e.halts&&e.halts.l),t:!!(e.halts&&e.halts.t),s:!!(e.halts&&e.halts.s)},
+    feeling:e.feeling||'',journal:e.journal||''
+  };
+}
+
+/* ---------- YOUR FULL 2026-11-18 BACKUP, baked in (data + shop + gifts + games) ---------- */
+const FULL_SEED={
+ data:{
+ "2026-10-31":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:false,actionType:"Walk",actionNote:"Walked buimeen",g1:"Buimeen",g2:"James and friend checking in",g3:"Haircut",craving:5,mood:2,note:""},
+ "2026-11-01":{p1:true,p2:true,p3:true,meds:true,ate:false,slept:false,actionType:"Other",actionNote:"Dinner with friends",g1:"17 hours of sleep ytd",g2:"Finishing the biography of MP",g3:"James, Annikka, Fumei and WWC here",craving:1,mood:2,note:""},
+ "2026-11-02":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Other",actionNote:"Pulse check",g1:"Office folks are normal",g2:"Backlog cleared in one morning",g3:"Red bean bun",craving:1,mood:3,note:""},
+ "2026-11-03":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:false,actionType:"Other",actionNote:"slept early",g1:"Able to sleep early",g2:"tranquil night with James and buimeen",g3:"Had sth i like for dinner",craving:5,mood:2,note:"Horrible sleep, nightmare, user reached out, but i slept"},
+ "2026-11-04":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Other",actionNote:"Dinner with fd",g1:"James bought a lot of pet snack",g2:"Austin reaching out",g3:"Polly’s bday dinner",craving:3,mood:2,note:"Exhaustion"},
+ "2026-11-05":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Counselling / therapy",actionNote:"Meeting with V",g1:"Meeting with V",g2:"Training with Nik",g3:"Short drama",craving:2,mood:2,note:"Still exhausted everyday"},
+ "2026-11-06":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Other",actionNote:"Singing class, reached out to Ben",g1:"Reached out to Ben",g2:"Singing class with the guys",g3:"Happiness needs Courage",craving:7,mood:2,note:""},
+ "2026-11-07":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Other",actionNote:"Dinner with friend",g1:"Dinner with friends",g2:"Reconnect with CA folks",g3:"Sober Friday",craving:7,mood:1,note:"worried about sister"},
+ "2026-11-08":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Other",actionNote:"dinner with friends",g1:"Chat with my sister",g2:"James and Buimeen",g3:"Dinner with friends",craving:4,mood:2,note:"worried"},
+ "2026-11-09":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Walk",actionNote:"The Mills",g1:"13 years with James (and buimeen)",g2:"Sober weekend",g3:"Laughing at reels",craving:8,mood:2,note:"Sleepiness night; flashback and racing thought"},
+ "2026-11-10":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Counselling / therapy",actionNote:"First time met with Jordan",g1:"Winter Finally",g2:"Upgrading my buimeen app",g3:"Dinner treat by friends",craving:5,mood:3,note:"lack of sleep"},
+ "2026-11-11":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:false,actionType:"Meeting",actionNote:"NA",g1:"meeting the people from fellowship after 2 years",g2:"PT with Nik",g3:"Decided to go for couple counselling",craving:5,mood:1,note:"Fucked up day"},
+ "2026-11-12":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Reading",actionNote:"Couple therapy intro, JFT",g1:"Anniversary Dinner with James",g2:"Reaching out to Frankie",g3:"Managed to finish tons of shit",craving:7,mood:1,note:"Fucked up work day"},
+ "2026-11-13":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Reading",actionNote:"JFT",g1:"Early off",g2:"Full week early shift on time",g3:"Good reels",craving:5,mood:2,note:"fuck my job"},
+ "2026-11-14":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Counselling / therapy",actionNote:"Group counseling",g1:"Friend's Baptism Ceremony",g2:"Sober Friday",g3:"Good board meeting done",craving:6,mood:3,note:"Weekend, need to be vigilant"},
+ "2026-11-15":{p1:false,p2:false,p3:false,meds:false,ate:false,slept:false,actionType:"Meeting",actionNote:"Marathon",g1:"having shelter",g2:"feeling less lonely due to fellow",g3:"seeing some light in recovery",craving:7,mood:1,note:"I feel the true powerlessness."},
+ "2026-11-16":{p1:true,p2:true,p3:true,meds:true,ate:false,slept:true,actionType:"Meeting",actionNote:"group meeting",g1:"support group",g2:"home",g3:"recovery program ahead",craving:3,mood:2,note:"exhausted , a bit anxious but stay hopeful"},
+ "2026-11-17":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Counselling / therapy",actionNote:"Individual and Group counseling",g1:"user reaching out - i am done, go fuck yourself",g2:"spending time with Nik",g3:"realizing I am actually fucking awesome",craving:0,mood:4,note:"fuck then all"},
+ "2026-11-18":{p1:true,p2:true,p3:true,meds:true,ate:true,slept:true,actionType:"Counselling / therapy",actionNote:"NA",g1:"Good meeting with fellows",g2:"great colleagues",g3:"New Cardi B sticker",craving:5,mood:3,note:"Bkk!"}
+ },
+ shop:{owned:["bandRed","dTeddy","mTop","mNerd","mCoffee","dGrad","heartg","bow","uHeadph","dMedal","uCape"],
+       equipped:{dTeddy:true,mCoffee:true,dGrad:true,uHeadph:true,dMedal:true,uCape:true},
+       freebies:["bandRed"]},
+ gifts:{claimed:2,mile:[0]},
+ gameLog:{days:{"2026-11-09":true,"2026-11-10":true,"2026-11-11":true,"2026-11-12":true,"2026-11-13":true,"2026-11-14":true}}
+};
+(function seed(){
+  for(const d in FULL_SEED.data){ if(!data[d]) data[d]=normEntry(FULL_SEED.data[d]); }
+  for(const d in data){ data[d]=normEntry(data[d]); }   /* migrate everything to 7.0 format */
+  saveJ(K_DATA,data);
+  FULL_SEED.shop.owned.forEach(id=>{if(!shop.owned.includes(id))shop.owned.push(id)});
+  FULL_SEED.shop.freebies.forEach(id=>{if(!shop.freebies.includes(id))shop.freebies.push(id)});
+  if(Object.keys(shop.equipped).length===0)shop.equipped={...FULL_SEED.shop.equipped};
+  saveJ(K_SHOP,shop);
+  if((gifts.claimed||0)<FULL_SEED.gifts.claimed)gifts.claimed=FULL_SEED.gifts.claimed;
+  FULL_SEED.gifts.mile.forEach(i=>{if(!gifts.mile.includes(i))gifts.mile.push(i)});
+  saveJ(K_GIFT,gifts);
+  for(const d in FULL_SEED.gameLog.days)gameLog.days[d]=true;
+  saveJ(K_GAME,gameLog);
+})();
+
+const isOk=e=>!!(e&&e.p1&&e.p2&&e.p3);
+const okTotal=()=>Object.keys(data).filter(d=>isOk(data[d])).length;
+const DAYNUM=Math.floor(Date.now()/864e5);
+
+/* ---------------- lock screen ---------------- */
+let pin=localStorage.getItem(K_PIN)||'', buf='', firstPin='', mode=pin?'enter':'create1';
+const dots=$('dots');
+function lockUI(){
+  $('lockSub').textContent = mode==='enter'?'Enter your passcode': mode==='create1'?'Create a 4-digit passcode':'Enter it once more';
+  [...dots.children].forEach((d,i)=>d.classList.toggle('on',i<buf.length));
+}
+function padPress(n){
+  if(n==='⌫'){buf=buf.slice(0,-1);lockUI();return}
+  if(buf.length>=4)return;
+  buf+=n; lockUI();
+  if(buf.length===4){
+    setTimeout(()=>{
+      if(mode==='create1'){firstPin=buf;buf='';mode='create2';$('lockMsg').textContent='';lockUI();}
+      else if(mode==='create2'){
+        if(buf===firstPin){localStorage.setItem(K_PIN,buf);pin=buf;unlock();}
+        else{buf='';firstPin='';mode='create1';$('lockMsg').textContent="Didn't match — let's try again 💛";dots.classList.add('shake');setTimeout(()=>dots.classList.remove('shake'),450);lockUI();}
+      }else{
+        if(buf===pin)unlock();
+        else{buf='';$('lockMsg').textContent='Not quite — Buimeen believes in you 🐾';dots.classList.add('shake');setTimeout(()=>dots.classList.remove('shake'),450);lockUI();}
+      }
+    },120);
+  }
+}
+(function buildPad(){
+  const keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  keys.forEach(k=>{const b=document.createElement('button');
+    if(k===''){b.className='blank'}else{b.textContent=k;if(k==='⌫')b.className='del';b.onclick=()=>padPress(k);}
+    $('pad').appendChild(b);});
+})();
+function unlock(){buf='';$('lockMsg').textContent='';$('lock').classList.add('hide');document.body.classList.remove('locked');renderAll();}
+function lockApp(){document.body.classList.add('locked');$('lock').classList.remove('hide');buf='';mode='enter';lockUI();}
+lockUI();
+
+/* ---------------- bones economy (7.0: multi self-care, WHO, journal) ---------------- */
+function entryBones(e){
+  let b=1;
+  if(isOk(e)) b+=3;
+  (e.actions||[]).slice(0,3).forEach(a=>{
+    if(a==='Meeting') b+=3;
+    else if(a==='Counselling / therapy'||a==='Meditation'||a==='Praying') b+=2;
+    else b+=1;
+  });
+  const g=[e.g1,e.g2,e.g3].filter(x=>x&&x.trim()).length;
+  if(g===3) b+=2; else if(g>0) b+=1;
+  if(e.meds&&e.ate&&e.slept) b+=1;
+  if(e.who&&e.who.w&&e.who.h&&e.who.o) b+=1;
+  if(e.journal&&e.journal.trim()) b+=1;
+  return b;
+}
+function mondayOf(ds){const[y,m,d]=ds.split('-').map(Number);const dt=new Date(y,m-1,d);const day=(dt.getDay()+6)%7;dt.setDate(dt.getDate()-day);
+  return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');}
+
+const QUESTS=[
+  {id:'check',icon:'✅',label:'Check in all 7 days',target:7,bonus:5},
+  {id:'ok',   icon:'🐾',label:'5 on-track days',target:5,bonus:6},
+  {id:'couns',icon:'🛋️',label:'3 counselling sessions',target:3,bonus:5},
+  {id:'meet', icon:'🪑',label:'2 meetings',target:2,bonus:4},
+  {id:'spirit',icon:'🧘',label:'Meditate or pray on 3 days',target:3,bonus:4},
+  {id:'walk', icon:'🚶',label:'3 walks',target:3,bonus:3},
+  {id:'grat', icon:'💛',label:'Gratitude on 5 days',target:5,bonus:4},
+  {id:'care', icon:'🍲',label:'Care + meals + rest on 4 days',target:4,bonus:3},
+  {id:'learn',icon:'📚',label:'Read or listen on 2 days',target:2,bonus:3},
+  {id:'note', icon:'✍️',label:'Write a note on 3 days',target:3,bonus:2}
+];
+function weekCounts(){
+  const w={};
+  for(const ds in data){const e=data[ds],k=mondayOf(ds);
+    w[k]=w[k]||{couns:0,meet:0,spirit:0,walk:0,grat:0,check:0,ok:0,care:0,learn:0,note:0};
+    const A=e.actions||[];
+    w[k].check++;
+    if(isOk(e))w[k].ok++;
+    if(A.includes('Counselling / therapy'))w[k].couns++;
+    if(A.includes('Meeting'))w[k].meet++;
+    if(A.includes('Meditation')||A.includes('Praying'))w[k].spirit++;
+    if(A.includes('Walk'))w[k].walk++;
+    if(A.includes('Reading')||A.includes('Podcast / audio'))w[k].learn++;
+    if([e.g1,e.g2,e.g3].some(x=>x&&x.trim()))w[k].grat++;
+    if(e.meds&&e.ate&&e.slept)w[k].care++;
+    if(e.note&&e.note.trim())w[k].note++;
+  }
+  return w;
+}
+
+/* ---------------- weekly pack gifts (unchanged) ---------------- */
+const GIFT_LIST=[
+ {icon:'💌',from:'James',title:'A letter from James',bones:2,body:"Thirteen years, and you still surprise me.\n\nI've watched you fight for this week, day by day. I'm not proud of you *despite* the hard days — I'm proud of you because of how you walk through them.\n\nI'm here. Tonight, tomorrow, all of it.\n\n— J 🖤"},
+ {icon:'👧🏻',from:'your niece',title:'A drawing from the cutest niece',bones:2,scene:0,body:"uncle!!!! i drew u and buimeen and uncle james!!! 🐶\n\nmama says ur doing something really hard and really brave. i told my whole class my uncle is the strongest.\n\n(the drawing is on the fridge now. it unlocked a scene!) 🎀"},
+ {icon:'🐶',from:'Buimeen',title:'Buimeen got you a present',bones:0,acc:'bow',body:"WOOF! 🐾\n\nTranslation: Buimeen dragged a BOW TIE out of nowhere and refuses to explain where he got it. It's yours, free — check the wardrobe and put it on him.\n\nHe says you earned it. He also says it's dinner time. It is not dinner time."},
+ {icon:'👩🏻🧑🏻‍🦱',from:'your sister & bro-in-law',title:'From your sister (and the quiet one)',bones:2,scene:1,body:"Hey you. 🤗\n\nIt's me (the warm loud one) and him (the quiet one who nodded approvingly while I wrote this).\n\n21 on-track days, counted forever. Hotpot at ours soon — your niece is already planning the seating chart. You're next to her, obviously.\n\nWe love you so much it's embarrassing."},
+ {icon:'💁🏻‍♀️',from:'Annikka',title:'A letter from Annikka ✨',bones:2,body:"Hi gorgeous — it's the pretty one. (I checked the app credits. It's official. I'm not sorry.)\n\nBut listen: the actual glow-up this year is YOU. Four weeks of showing up. Meetings. Counselling. Telling the truth on tough days.\n\nThat's not luck, that's character. And character, darling, never goes out of style. ✨"},
+ {icon:'🐻',from:'Fumei',title:'A very large hug from Fumei',bones:2,body:"*Fumei appears, wearing the bear hoodie.*\n\nPeople keep thinking I'm an actual bear. I am 100% human and 200% hug — the hoodie just helps. And today, every bit of me is proud of you.\n\nThe path behind you is long, and you walked EVERY step of it.\n\nBear hug issued. It is non-refundable. 🐻"},
+ {icon:'🧘🏻‍♂️',from:'Alvas',title:'A calm note from Alvas',bones:2,scene:2,body:"Breathe in... and out.\n\nSix weeks of on-track days. Not six weeks of perfect days — six weeks of honest ones. That is better.\n\nThe urge is a wave; you are the ocean. Also I unlocked a morning-walk scene for you. Go look. Then go breathe. 🧘🏻‍♂️"},
+ {icon:'🧍🏻‍♂️',from:'Alvin',title:'A text from your brother',bones:2,body:"yo.\n\nit's alvin. the tall quiet-chaos one, you know me.\n\ni'm not good at the mushy stuff so: 49 days. that's absurd. you're absurd. keep being absurd.\n\nproud of you, bro. don't make it weird. 🧍🏻‍♂️"},
+ {icon:'📸',from:'the whole pack',title:'The hiking photo',bones:2,scene:3,body:"Remember the hike? James, your sister, your bro-in-law — and you're not IN the photo, because you took it.\n\nThat's you, isn't it. Behind the camera, holding the whole frame together.\n\nThis gift unlocked that scene. Go see your people. 🏞️"},
+ {icon:'💌',from:'James',title:'James again (he insisted)',bones:3,body:"Me again.\n\nTen weeks of on-track days, counted across everything. I did the math twice.\n\nI booked us something for the weekend. No, I'm not telling the app what it is. Wear something nice. Buimeen is NOT invited and he's furious.\n\n— J 🖤"},
+ {icon:'👧🏻',from:'your niece',title:'A voice note (transcribed)',bones:2,body:"🎙️ 'UNCLE. hi hi hi. mama said you got ANOTHER star week. i did a dance. buimeen would have liked the dance. ok i have to go, we're making dumplings, BYEEEE I LOVE YOU' 🥟🎀"},
+ {icon:'🐶',from:'Buimeen',title:'Buimeen declares you Best Human',bones:3,scene:4,body:"WOOF WOOF! 🐾👑\n\n84 on-track days, total, forever. Buimeen has reviewed the evidence and ruled: BEST HUMAN.\n\nBeach-day scene unlocked. He's already rolling in imaginary sand."}
+];
+function giftAt(i){
+  if(i<GIFT_LIST.length)return GIFT_LIST[i];
+  const pool=['😊','💁🏻‍♀️','👩🏻','👧🏻','🐻','🧘🏻‍♂️','🧍🏻‍♂️','🧑🏻‍🦱','🐶'];
+  return {icon:pool[i%pool.length],from:'the whole pack',title:'Pack cheer #'+(i+1),bones:5,
+    body:"Another 7 on-track days in the bank — "+((i+1)*7)+" total, counted forever.\n\nThe whole pack is standing on the porch cheering embarrassingly loudly. +5 bonus bones. 🦴🎉"};
+}
+const SCENES=[
+ {art:'🖼️👧🏻🖍️🐶🧑🏻😊',cap:"Niece's fridge drawing: you, James & Buimeen (Buimeen is green, don't ask)"},
+ {art:'🍲👩🏻🧑🏻‍🦱👧🏻🧑🏻😊',cap:'Hotpot night at your sister\'s — niece controls the seating chart'},
+ {art:'🌅🧘🏻‍♂️🧑🏻🐶🌳',cap:'Morning walk with Alvas — breathe in, breathe out, Buimeen chases a leaf'},
+ {art:'🏞️😊👩🏻🧑🏻‍🦱📸',cap:'The hike — James, sis & bro-in-law smiling at YOU, the fourth one, behind the camera'},
+ {art:'🏖️🐶🎾🧑🏻😊🌊',cap:'Beach day — Buimeen vs. the ocean. The ocean is winning.'}
+];
+
+/* ---------------- BIG milestone chests (unchanged) ---------------- */
+const MILE=[
+ {req:7,icon:'🎉',name:'One-Week Chest',bones:15,
+  body:"ONE WHOLE WEEK! 🎉\n\nThe entire pack crammed onto the porch for this. Your niece made a banner that says 'WEEK CHAMPION!!!!!!!' — seven exclamation marks, one per day, she counted. Fumei lifted her up to tape it. Alvin pretended not to cry. He cried.\n\nSeven on-track days, counted forever. Every legend starts exactly here.\n\nInside the chest: +15 🦴"},
+ {req:30,icon:'💝',name:'One-Month Chest',bones:30,freebie:'cape',
+  body:"ONE MONTH. 💝\n\nJames speaking. I did the math three times because I kept smiling and losing count.\n\nThirty on-track days. You built that out of ordinary mornings and brave evenings.\n\nInside the chest: a HERO CAPE for Buimeen (already in the wardrobe — he has been doing dramatic poses for an hour) and +30 🦴.\n\nI love you. Keep going. — J 🖤"},
+ {req:90,icon:'🏆',name:'Three-Month Chest',bones:50,freebie:'bandGold',
+  body:"THREE MONTHS, darling. ✨\n\nAnnikka here. An entire SEASON of showing up. Do you know how rare that is? I do. I keep statistics on fabulous people.\n\nInside the chest: a GOLD bandana for Buimeen — the best boy of the best human deserves gold — and +50 🦴.\n\nI would say I'm proud, but 'proud' is too small a word. I'm dazzled. 💛"},
+ {req:180,icon:'👑',name:'Half-Year Chest',bones:75,freebie:'uCrown',
+  body:"HALF A YEAR. 👑\n\nIt's your sister. Your niece is bouncing next to me — she wants to type: 'UNCLE YOU ARE A KING NOW!!!'\n\nShe's right. 180 on-track days. So inside this chest is a GOLDEN CROWN for YOUR character — check the wardrobe and wear it everywhere. Even to breakfast. ESPECIALLY to breakfast.\n\n+75 🦴. Dinner at ours this week. Non-negotiable. We love you."},
+ {req:365,icon:'🌟',name:'One-Year Chest',bones:100,freebie:'uMedal',
+  body:"ONE. YEAR. 🌟\n\n365 on-track days. The whole pack is here — James, Annikka, your sister, your bro-in-law (he nodded SO hard), your niece, Alvin, Fumei, Alvas, and one extremely proud dog.\n\nYou did the bravest, slowest, most stubborn kind of great thing: you kept choosing yourself, one day at a time, for a year.\n\nInside the chest: the LEGEND MEDAL for your character — one of one, cannot be bought, only earned — and +100 🦴.\n\nWe are so proud of you. Forever. 💛🐾"}
+];
+
+/* ---------------- wardrobe catalog ---------------- */
+const ITEMS=[
+ {id:'bandRed',who:'dog',icon:'🔴',name:'Red bandana',price:0,band:['#e5484d','#c93338'],slot:'dband',cat:'Bandanas',unlock:'free at a 7-day streak'},
+ {id:'bandBlue',who:'dog',icon:'🔵',name:'Blue bandana',price:10,band:['#4d7de5','#3360c9'],slot:'dband',cat:'Bandanas'},
+ {id:'bandPurple',who:'dog',icon:'🟣',name:'Purple bandana',price:12,band:['#9b59d0','#7a3fb0'],slot:'dband',cat:'Bandanas'},
+ {id:'bandGold',who:'dog',icon:'🟡',name:'Gold bandana',price:15,band:['#e8a93c','#c9871e'],slot:'dband',cat:'Bandanas'},
+ {id:'hat',who:'dog',icon:'🥳',name:'Party hat',price:12,g:'accHat',slot:'dhat',cat:'Hats'},
+ {id:'wizard',who:'dog',icon:'🧙',name:'Wizard hat',price:15,g:'gWizard',slot:'dhat',cat:'Hats'},
+ {id:'flower',who:'dog',icon:'🌸',name:'Flower crown',price:12,g:'gFlower',slot:'dhat',cat:'Hats'},
+ {id:'dogCrown',who:'dog',icon:'👑',name:'Golden crown',price:0,g:'gCrown',slot:'dhat',cat:'Hats',unlock:'free at a 30-day streak'},
+ {id:'shades',who:'dog',icon:'😎',name:'Cool shades',price:10,g:'accShades',slot:'deyes',cat:'Glasses'},
+ {id:'heartg',who:'dog',icon:'😍',name:'Heart glasses',price:12,g:'gHeartG',slot:'deyes',cat:'Glasses'},
+ {id:'scarf',who:'dog',icon:'🧣',name:'Cozy scarf',price:8,g:'accScarf',cat:'Neck & badges'},
+ {id:'bow',who:'dog',icon:'🎀',name:'Bow tie',price:8,g:'accBow',cat:'Neck & badges'},
+ {id:'bone',who:'dog',icon:'🦴',name:'Bone necklace',price:10,g:'gBoneNeck',cat:'Neck & badges'},
+ {id:'cape',who:'dog',icon:'🦸',name:'Hero cape',price:18,g:'gDogCape',cat:'Outfits'},
+ {id:'ball',who:'dog',icon:'🎾',name:'Tennis ball',price:6,g:'accBall',slot:'dside',cat:'Toys & held'},
+ {id:'uCap',who:'me',icon:'🧢',name:'Cool cap',price:12,g:'uCap',slot:'mhat',cat:'Hats'},
+ {id:'uHeadph',who:'me',icon:'🎧',name:'Headphones',price:14,g:'uHeadph',slot:'mhat',cat:'Hats'},
+ {id:'uCrown',who:'me',icon:'👑',name:'Golden crown',price:30,g:'uCrown',slot:'mhat',cat:'Hats'},
+ {id:'uShades',who:'me',icon:'🕶️',name:'Sunglasses',price:10,g:'uShades',slot:'meyes',cat:'Glasses'},
+ {id:'uScarf',who:'me',icon:'🧣',name:'Matching scarf',price:8,g:'uScarf',cat:'Neck & badges'},
+ {id:'uCape',who:'me',icon:'🦸',name:'Hero cape',price:20,g:'uCape',cat:'Outfits'},
+ {id:'uMedal',who:'me',icon:'🥇',name:'Legend medal',price:null,g:'uMedal',slot:'mneck',cat:'Neck & badges',unlock:'inside the 1-Year Chest 🌟'}
+];
+const EMD=[
+ ['dTop','🎩','Fancy top hat',14,'dhat'],['dSun','👒','Sunny sun hat',10,'dhat'],['dGrad','🎓','Smart-pup cap',12,'dhat'],['dCap','🧢','Sporty cap',9,'dhat'],['dHelm','⛑️','Rescue helmet',12,'dhat'],['dAdv','🪖','Adventure helmet',12,'dhat'],
+ ['dNerd','👓','Nerd glasses',9,'deyes'],['dGog','🥽','Swim goggles',10,'deyes'],
+ ['dStar','🌟','Star badge',8,'dneck'],['dMedal','🏅','Good-boy medal',12,'dneck'],['dBell','🔔','Jingle bell',7,'dneck'],['dPack','🎒','Tiny backpack',12,'dneck'],
+ ['dUmb','🌂','Mini umbrella',8,'dside'],['dTeddy','🧸','Teddy friend',10,'dside'],['dSteak','🍖','Giant steak',9,'dside'],['dFris','🥏','Frisbee',7,'dside'],['dSkate','🛹','Skateboard',14,'dside'],['dBask','🏀','Basketball',8,'dside'],['dSoc','⚽','Soccer ball',8,'dside'],['dKite','🪁','Rainbow kite',10,'dside'],['dSock','🧦','Lucky sock',5,'dside'],['dWand','🪄','Magic wand',12,'dside'],['dTrump','🎺','Trumpet',11,'dside'],['dGuitar','🎸','Tiny guitar',14,'dside'],['dSkates','🛼','Roller skate',11,'dside'],['dDuck','🦆','Rubber ducky',6,'dside'],['dDonut','🍩','Donut toy',6,'dside'],['dCake','🧁','Pupcake',7,'dside'],['dRocket','🚀','Rocket toy',15,'dside'],['dDisco','🪩','Disco ball',13,'dside']
+];
+const EMM=[
+ ['mTop','🎩','Top hat',14,'mhat'],['mGrad','🎓','Grad cap',12,'mhat'],['mSun','👒','Sun hat',10,'mhat'],['mHelm','🪖','Explorer helmet',12,'mhat'],['mBow','🎀','Hair bow',8,'mhat'],
+ ['mNerd','👓','Smart glasses',9,'meyes'],['mGog','🥽','Ski goggles',10,'meyes'],
+ ['mCam','📷','Camera',15,'mneck'],['mComp','🧭','Compass',10,'mneck'],['mMed','🏅','Sports medal',12,'mneck'],['mBone','🦴','Bone pendant',8,'mneck'],
+ ['mUmb','☂️','Umbrella',8,'mhand'],['mGuitar','🎸','Guitar',16,'mhand'],['mMic','🎤','Microphone',10,'mhand'],['mTrophy','🏆','Trophy',18,'mhand'],['mBook','📚','Book stack',9,'mhand'],['mCoffee','☕','Coffee mug',6,'mhand'],['mBoba','🧋','Boba tea',7,'mhand'],['mPizza','🍕','Pizza slice',6,'mhand'],['mGame','🎮','Controller',12,'mhand'],['mSkate','🛹','Skateboard',14,'mhand'],['mBask','🏀','Basketball',8,'mhand'],['mSoc','⚽','Soccer ball',8,'mhand'],['mWand','🪄','Magic wand',12,'mhand'],['mShield','🛡️','Hero shield',15,'mhand'],['mArt','🎨','Paint palette',10,'mhand'],['mTeddy','🧸','Teddy bear',10,'mhand'],['mFlower','🌻','Sunflower',6,'mhand'],['mDisco','🪩','Disco ball',13,'mhand'],['mCake','🧁','Cupcake',6,'mhand']
+];
+const SLOTCAT={dhat:'Hats',mhat:'Hats',deyes:'Glasses',meyes:'Glasses',dneck:'Neck & badges',mneck:'Neck & badges',dside:'Toys & held',mhand:'Toys & held'};
+EMD.forEach(a=>ITEMS.push({id:a[0],who:'dog',icon:a[1],em:a[1],name:a[2],price:a[3],slot:a[4],cat:SLOTCAT[a[4]]}));
+EMM.forEach(a=>ITEMS.push({id:a[0],who:'me',icon:a[1],em:a[1],name:a[2],price:a[3],slot:a[4],cat:SLOTCAT[a[4]]}));
+
+/* ---------- NEW 7.0: James & Annikka outfits (11 each) ---------- */
+const JOUT=[
+ ['jBear','🐻','Bear onesie',{hoodie:true,shirt:'#8b5e3c',pants:'#6b4a33'},'gift — yours right away 💛'],
+ ['jSuit','🤵','Navy suit',{shirt:'#2e3a5c',pants:'#232c46'}],
+ ['jHawaii','🌺','Aloha shirt',{shirt:'#ff8a5c',pants:'#f0dcb4'}],
+ ['jCozy','🧶','Cozy sweater',{shirt:'#c96f4a',pants:'#4a4066'}],
+ ['jSport','🏀','Game-day jersey',{shirt:'#e85d2f',pants:'#e9e6f2'}],
+ ['jHero','🦸','Hero suit',{shirt:'#d33434',pants:'#2b2b4a',hat:'⭐'}],
+ ['jChef','🍳','Chef whites',{shirt:'#f4f1ea',pants:'#3a3550',hat:'🍳'}],
+ ['jDoc','🥼','Lab coat',{shirt:'#eef3f7',pants:'#6b7a8f'}],
+ ['jRock','🎸','Rockstar leather',{shirt:'#2b2b2b',pants:'#1d1d1d',hat:'🎸'}],
+ ['jSanta','🎅','Santa suit',{shirt:'#d33434',pants:'#8f2626',hat:'🎄'}],
+ ['jTux','🎩','Classic tuxedo',{shirt:'#23232e',pants:'#16161f',hat:'🎩'}]
+];
+const AOUT=[
+ ['aGown','🌙','Silk night gown',{dress:true,shirt:'#b9a7e8',pants:'#9a86d4',hat:'🌙'},'gift — yours right away 💛'],
+ ['aBall','👗','Ballroom gown',{dress:true,shirt:'#ff8fb0',pants:'#e87aa0'}],
+ ['aSummer','🌼','Summer dress',{dress:true,shirt:'#ffd23f',pants:'#f3b53a'}],
+ ['aBiz','💼','Power blazer',{dress:false,shirt:'#6b5b8f',pants:'#3a3550'}],
+ ['aSequin','✨','Sequin party dress',{dress:true,shirt:'#c0b3f0',pants:'#a393e0',hat:'✨'}],
+ ['aYoga','🧘‍♀️','Athleisure set',{dress:false,shirt:'#7fd6b8',pants:'#4a8f7a'}],
+ ['aPrincess','👑','Princess dress',{dress:true,shirt:'#ffb3d9',pants:'#f09ac4',hat:'👑'}],
+ ['aWinter','❄️','Winter chic coat',{dress:false,shirt:'#dfe8f5',pants:'#8fa3c4',hat:'❄️'}],
+ ['aRed','❤️','Red carpet dress',{dress:true,shirt:'#e5484d',pants:'#c23338'}],
+ ['aMermaid','🧜‍♀️','Mermaid dress',{dress:true,shirt:'#4fc6c0',pants:'#2e8f8a'}],
+ ['aStar','🌟','Golden star dress',{dress:true,shirt:'#ffd23f',pants:'#e8b92c',hat:'🌟'}]
+];
+JOUT.forEach((a,i)=>ITEMS.push({id:a[0],who:'james',icon:a[1],name:a[2],price:0,slot:'jout',cat:'Outfits',style:a[3],
+  unlock:a[4]||((9*i)+'-day clean streak 🔥')}));
+AOUT.forEach((a,i)=>ITEMS.push({id:a[0],who:'annikka',icon:a[1],name:a[2],price:0,slot:'aout',cat:'Outfits',style:a[3],
+  unlock:a[4]||((9*i)+'-day clean streak 🔥')}));
+
+const SLOTPOS={
+ dhat:{x:150,y:58,s:72,host:'gHead'}, deyes:{x:150,y:152,s:68,host:'gHead'},
+ dneck:{x:150,y:272,s:42,host:'dog'}, dside:{x:256,y:300,s:52,host:'dog'},
+ mhat:{x:110,y:52,s:58,host:'me'},   meyes:{x:110,y:122,s:48,host:'me'},
+ mneck:{x:110,y:174,s:34,host:'me'}, mhand:{x:180,y:232,s:44,host:'me'}
+};
+function equipSlot(it){
+  if(it.slot)ITEMS.forEach(x=>{if(x.slot===it.slot)delete shop.equipped[x.id]});
+  shop.equipped[it.id]=true;
+}
+function grantItem(id,eq){
+  if(!shop.owned.includes(id))shop.owned.push(id);
+  if(!shop.freebies.includes(id))shop.freebies.push(id);
+  if(eq){const it=ITEMS.find(x=>x.id===id);if(it)equipSlot(it);}
+}
+function grantOnce(id,eq,msg){
+  if(shop.owned.includes(id))return false;
+  grantItem(id,eq);if(msg)toast(msg);return true;
+}
+function applyOutfits(){
+  ITEMS.forEach(it=>{if(it.g){const el=document.getElementById(it.g);if(el)el.setAttribute('display',shop.equipped[it.id]?'inline':'none')}});
+  const bandIt=ITEMS.find(it=>it.band&&shop.equipped[it.id]);
+  const gb=document.getElementById('gBandana');
+  if(bandIt){gb.setAttribute('display','inline');$('bandMain').setAttribute('fill',bandIt.band[0]);$('bandEdge').setAttribute('stroke',bandIt.band[1]);}
+  else gb.setAttribute('display','none');
+  document.querySelectorAll('.emAcc').forEach(n=>n.remove());
+  ITEMS.forEach(it=>{
+    if(it.em&&shop.equipped[it.id]){
+      const p=SLOTPOS[it.slot];if(!p)return;
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',p.x);t.setAttribute('y',p.y);
+      t.setAttribute('font-size',p.s);t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','emAcc');t.textContent=it.em;
+      const host=p.host==='gHead'?document.getElementById('gHead'):
+                 p.host==='dog'?document.querySelector('#dog svg'):document.querySelector('#me svg');
+      if(host)host.appendChild(t);
+    }
+  });
+}
+function autoGrants(cur,best){
+  let ch=false;
+  if(cur>=7)ch=grantOnce('bandRed',true,'🔴 7-day streak! Buimeen earned his red bandana!')||ch;
+  if(cur>=30)ch=grantOnce('dogCrown',true,'👑 30-day streak! Buimeen earned a crown!')||ch;
+  ch=grantOnce('jBear',true)||ch;
+  ch=grantOnce('aGown',true)||ch;
+  for(let m=1;m<=10;m++){
+    if(best>=9*m){
+      ch=grantOnce(JOUT[m][0],false,'👔 '+(9*m)+'-day streak! New outfits for James & Annikka! 🎉')||ch;
+      ch=grantOnce(AOUT[m][0],false)||ch;
+    }
+  }
+  if(ch)saveJ(K_SHOP,shop);
+}
+function computeBones(){
+  let earned=0;
+  for(const d in data)earned+=entryBones(data[d]);
+  const w=weekCounts();
+  for(const k in w)QUESTS.forEach(q=>{if(w[k][q.id]>=q.target)earned+=q.bonus});
+  for(let i=0;i<gifts.claimed;i++)earned+=giftAt(i).bones;
+  gifts.mile.forEach(i=>{if(MILE[i])earned+=MILE[i].bones});
+  earned+=Object.keys(gameLog.days).length*3;
+  let spent=0;
+  shop.owned.forEach(id=>{
+    const it=ITEMS.find(s=>s.id===id);
+    if(it&&it.price&&!shop.freebies.includes(id))spent+=it.price;
+  });
+  return{earned,spent,now:Math.max(0,earned-spent)};
+}
+
+/* ---------------- levels ---------------- */
+const LVL_TITLES=['Tiny Pup 🐣','Curious Pup 👀','Brave Pup 🐾','Treat Scout 🍪','Ball Chaser 🎾','Bone Collector 🦴','Trail Walker 🥾','Wave Rider 🌊','Pack Buddy 💛','Pack Star ⭐','Park Legend 🏞️','Golden Guardian ✨','Super Walker 💫','Mega Woofer 📣','Pack Hero 🦸','Shining Alpha 🌟','Legendary Alpha 👑','Mythic Good Human 🔮','Galaxy Pup Commander 🚀','Eternal Best Friend ♾️'];
+function levelFor(xp){
+  let lvl=1,need=20,r=xp;
+  while(r>=need){r-=need;lvl++;need=16+lvl*6;}
+  return{lvl,r,need,title:LVL_TITLES[Math.min(lvl-1,LVL_TITLES.length-1)]};
+}
+
+/* ---------------- the pack characters ---------------- */
+const CHARS={
+ you:    {h:271,build:1.00,skin:'#f6cfa4',hair:'short',hairC:'#3b2a20',shirt:'#7c6cf0',pants:'#4a4066',info:'the hero of this story 📸'},
+ james:  {h:279,build:1.22,round:1.1,skin:'#f3c99d',hair:'short',hairC:'#2e2218',shirt:'#4e8d6e',pants:'#4a4066',info:'your rock, your home — 13 years 💛'},
+ annikka:{h:264,build:0.90,skin:'#f8d7b0',hair:'long',hairC:'#c98a3a',sparkle:true,lash:true,lip:true,shirt:'#ff7a8a',pants:'#8a5a9f',info:'officially the pretty one ✨'},
+ sis:    {h:245,build:0.95,skin:'#f3c99d',hair:'ponytail',hairC:'#2e2218',lash:true,shirt:'#ffa56b',pants:'#6b5b8f',info:'warm hugs & hotpot powers 🍲'},
+ bil:    {h:285,build:0.85,skin:'#eab98e',hair:'curly',hairC:'#241a12',shirt:'#7f8fa6',pants:'#3a3550',info:'says little, shows up always'},
+ niece:  {h:186,build:1.00,kid:true,lash:true,skin:'#f6cfa4',hair:'pigtails',hairC:'#3b2a20',dress:true,shirt:'#ff8fb0',pants:'#f6cfa4',info:'Chief Morale Officer 🎀'},
+ alvin:  {h:288,build:0.80,skin:'#fde7d2',hair:'short',hairC:'#1e1712',shirt:'#4b5362',pants:'#2e3340',info:'your brother · secretly mushy'},
+ fumei:  {h:271,build:1.42,skin:'#f0c398',hoodie:true,shirt:'#8b5e3c',pants:'#5a4632',info:"not a bear — it's the hoodie 🐻"},
+ alvas:  {h:273,build:0.88,skin:'#e9b98a',hair:'bun',hairC:'#2e2218',calm:true,shirt:'#a8c3a0',pants:'#8d8471',info:'professionally calm 🧘🏻‍♂️'}
+};
+
+/* ---- avatar builder (design-review approved ✅) ---- */
+function personSVG(c){
+  const B=300,cx=100;
+  const r=c.h*(c.kid?0.155:0.115);
+  const rx=r*(c.round||1);
+  const topY=B-c.h, hcy=topY+r;
+  const tW=c.h*0.30*(c.build||1);
+  const tH=c.h*(c.kid?0.30:0.36);
+  const neckH=r*0.32;
+  const neckTop=hcy+r*0.70;
+  const nY=neckTop+neckH;
+  const hipY=nY+tH;
+  const legW=Math.max(9,tW*0.26);
+  const armW=Math.max(8,legW*0.82);
+  const sk=c.skin,sh=c.shirt,pa=c.pants,hC=c.hairC||'#3b2a20';
+  const lx=cx-tW*0.22,rxp=cx+tW*0.22;
+  let s='';
+  s+=`<ellipse cx="${cx}" cy="${B+9}" rx="${tW*0.95}" ry="8" fill="#3a3550" opacity=".08"/>`;
+  if(c.hoodie){
+    s+=`<circle cx="${cx-r*1.0}" cy="${hcy-r*0.96}" r="${r*0.42}" fill="${sh}"/><circle cx="${cx-r*1.0}" cy="${hcy-r*0.96}" r="${r*0.2}" fill="#c99e6f"/>`;
+    s+=`<circle cx="${cx+r*1.0}" cy="${hcy-r*0.96}" r="${r*0.42}" fill="${sh}"/><circle cx="${cx+r*1.0}" cy="${hcy-r*0.96}" r="${r*0.2}" fill="#c99e6f"/>`;
+    s+=`<circle cx="${cx}" cy="${hcy}" r="${r*1.24}" fill="${sh}"/>`;
+  }
+  if(c.hair==='long'){
+    s+=`<ellipse cx="${cx}" cy="${hcy-r*0.05}" rx="${rx*1.18}" ry="${r*1.08}" fill="${hC}"/>`;
+    s+=`<path d="M ${cx-rx*1.1} ${hcy} Q ${cx-rx*1.38} ${hcy+r*1.3} ${cx-rx*0.88} ${hcy+r*2.15} Q ${cx-rx*0.55} ${hcy+r*1.5} ${cx-rx*0.72} ${hcy+r*0.5} Z" fill="${hC}"/>`;
+    s+=`<path d="M ${cx+rx*1.1} ${hcy} Q ${cx+rx*1.38} ${hcy+r*1.3} ${cx+rx*0.88} ${hcy+r*2.15} Q ${cx+rx*0.55} ${hcy+r*1.5} ${cx+rx*0.72} ${hcy+r*0.5} Z" fill="${hC}"/>`;
+  }
+  if(c.hair==='ponytail'){
+    s+=`<path d="M ${cx+rx*0.65} ${hcy-r*0.6} Q ${cx+rx*1.45} ${hcy-r*0.1} ${cx+rx*1.1} ${hcy+r*1.55} Q ${cx+rx*0.78} ${hcy+r*0.8} ${cx+rx*0.78} ${hcy-r*0.05} Z" fill="${hC}"/>`;
+  }
+  if(c.hair==='pigtails'){
+    s+=`<rect x="${cx-rx*1.08-r*0.18}" y="${hcy-r*0.25}" width="${r*0.36}" height="${r*1.2}" rx="${r*0.18}" fill="${hC}"/>`;
+    s+=`<rect x="${cx+rx*1.08-r*0.18}" y="${hcy-r*0.25}" width="${r*0.36}" height="${r*1.2}" rx="${r*0.18}" fill="${hC}"/>`;
+  }
+  s+=`<rect x="${lx-legW/2}" y="${hipY-8}" width="${legW}" height="${B-hipY+8}" rx="${legW/2}" fill="${pa}"/>`;
+  s+=`<rect x="${rxp-legW/2}" y="${hipY-8}" width="${legW}" height="${B-hipY+8}" rx="${legW/2}" fill="${pa}"/>`;
+  s+=`<ellipse cx="${lx+3}" cy="${B+3}" rx="${legW}" ry="7" fill="#3a3550"/>`;
+  s+=`<ellipse cx="${rxp+3}" cy="${B+3}" rx="${legW}" ry="7" fill="#3a3550"/>`;
+  s+=`<path d="M ${cx-tW/2+armW*0.2} ${nY+14} Q ${cx-tW/2-armW*1.1} ${nY+tH*0.5} ${cx-tW/2-armW*0.35} ${hipY-6}" stroke="${sh}" stroke-width="${armW}" fill="none" stroke-linecap="round"/>`;
+  s+=`<path d="M ${cx+tW/2-armW*0.2} ${nY+14} Q ${cx+tW/2+armW*1.1} ${nY+tH*0.5} ${cx+tW/2+armW*0.35} ${hipY-6}" stroke="${sh}" stroke-width="${armW}" fill="none" stroke-linecap="round"/>`;
+  s+=`<circle cx="${cx-tW/2-armW*0.35}" cy="${hipY-4}" r="${armW*0.55}" fill="${sk}"/>`;
+  s+=`<circle cx="${cx+tW/2+armW*0.35}" cy="${hipY-4}" r="${armW*0.55}" fill="${sk}"/>`;
+  s+=`<rect x="${cx-r*0.28}" y="${neckTop}" width="${r*0.56}" height="${neckH+8}" rx="${r*0.2}" fill="${sk}"/>`;
+  if(c.dress){
+    s+=`<path d="M ${cx-tW*0.32} ${nY} L ${cx+tW*0.32} ${nY} L ${cx+tW*0.62} ${hipY+14} L ${cx-tW*0.62} ${hipY+14} Z" fill="${sh}"/>`;
+  }else{
+    s+=`<rect x="${cx-tW/2}" y="${nY}" width="${tW}" height="${tH+6}" rx="${tW*0.22}" fill="${sh}"/>`;
+  }
+  if(c.hoodie){
+    s+=`<path d="M ${cx-10} ${nY+6} l -3 20 M ${cx+10} ${nY+6} l 3 20" stroke="#5a4632" stroke-width="3" stroke-linecap="round"/>`;
+    s+=`<rect x="${cx-tW*0.28}" y="${hipY-tH*0.3}" width="${tW*0.56}" height="${tH*0.22}" rx="8" fill="#7a4f30"/>`;
+  }
+  s+=`<ellipse cx="${cx}" cy="${hcy}" rx="${rx}" ry="${r}" fill="${sk}"/>`;
+  if(c.sparkle){
+    s+=`<circle cx="${cx-rx*0.99}" cy="${hcy+r*0.08}" r="${r*0.15}" fill="${sk}"/><circle cx="${cx+rx*0.99}" cy="${hcy+r*0.08}" r="${r*0.15}" fill="${sk}"/>`;
+    s+=`<circle cx="${cx-rx*0.99}" cy="${hcy+r*0.3}" r="3.5" fill="#ffd23f"/><circle cx="${cx+rx*0.99}" cy="${hcy+r*0.3}" r="3.5" fill="#ffd23f"/>`;
+  }
+  const fr=hcy-r*0.15;
+  const cap=`<path d="M ${cx-rx*0.99} ${fr} A ${rx*0.99} ${r*0.92} 0 0 1 ${cx+rx*0.99} ${fr} Q ${cx+rx*0.72} ${hcy-r*0.5} ${cx+rx*0.38} ${hcy-r*0.56} Q ${cx} ${hcy-r*0.40} ${cx-rx*0.38} ${hcy-r*0.56} Q ${cx-rx*0.72} ${hcy-r*0.5} ${cx-rx*0.99} ${fr} Z" fill="${hC}"/>`;
+  if(c.hair==='short')s+=cap;
+  if(c.hair==='curly'){s+=cap;[-0.8,-0.4,0,0.4,0.8].forEach(a=>{s+=`<circle cx="${cx+rx*a}" cy="${hcy-r*0.84+Math.abs(a)*r*0.16}" r="${r*0.3}" fill="${hC}"/>`});}
+  if(c.hair==='long'){
+    s+=`<path d="M ${cx-rx*1.03} ${hcy+r*0.12} Q ${cx-rx*1.1} ${hcy-r*0.95} ${cx} ${hcy-r*1.02} Q ${cx+rx*1.1} ${hcy-r*0.95} ${cx+rx*1.03} ${hcy+r*0.12} Q ${cx+rx*0.92} ${hcy-r*0.35} ${cx+rx*0.55} ${hcy-r*0.55} Q ${cx-rx*0.1} ${hcy-r*0.72} ${cx-rx*0.6} ${hcy-r*0.28} Q ${cx-rx*0.9} ${hcy-r*0.05} ${cx-rx*1.03} ${hcy+r*0.12} Z" fill="${hC}"/>`;
+    s+=`<path d="M ${cx-rx*0.5} ${hcy-r*0.78} Q ${cx+rx*0.1} ${hcy-r*0.93} ${cx+rx*0.6} ${hcy-r*0.68}" stroke="#e2a954" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>`;
+  }
+  if(c.hair==='ponytail'){s+=cap+`<circle cx="${cx+rx*0.82}" cy="${hcy-r*0.45}" r="4.5" fill="#ff7a8a"/>`;}
+  if(c.hair==='bun'){s+=cap+`<circle cx="${cx}" cy="${hcy-r*1.06}" r="${r*0.34}" fill="${hC}"/><path d="M ${cx-r*0.3} ${hcy-r*0.86} h ${r*0.6}" stroke="#8d8471" stroke-width="3" stroke-linecap="round"/>`;}
+  if(c.hair==='pigtails'){s+=cap;
+    s+=`<circle cx="${cx-rx*1.08}" cy="${hcy-r*0.45}" r="${r*0.38}" fill="${hC}"/><circle cx="${cx+rx*1.08}" cy="${hcy-r*0.45}" r="${r*0.38}" fill="${hC}"/>`;
+    [-1,1].forEach(dd=>{const bx=cx+dd*rx*1.08, by=hcy-r*0.78;
+      s+=`<path d="M ${bx} ${by} l ${-9*dd} -6 l 0 12 Z" fill="#ff5f8a"/><path d="M ${bx} ${by} l ${9*dd} -6 l 0 12 Z" fill="#ff5f8a"/><circle cx="${bx}" cy="${by}" r="3.5" fill="#ffd23f"/>`;});
+  }
+  const ey=hcy+r*0.02, ex=rx*0.40, er=c.kid?5.4:4.6;
+  s+=`<path d="M ${cx-ex-8} ${ey-r*0.30} q 8 -4.5 16 0 M ${cx+ex-8} ${ey-r*0.30} q 8 -4.5 16 0" stroke="${hC}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+  if(c.calm){
+    s+=`<path d="M ${cx-ex-6} ${ey} Q ${cx-ex} ${ey+5} ${cx-ex+6} ${ey} M ${cx+ex-6} ${ey} Q ${cx+ex} ${ey+5} ${cx+ex+6} ${ey}" stroke="#2b1810" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  }else{
+    s+=`<circle cx="${cx-ex}" cy="${ey}" r="${er}" fill="#2b1810"/><circle cx="${cx-ex+1.7}" cy="${ey-1.7}" r="1.8" fill="#fff"/><circle cx="${cx-ex-1.4}" cy="${ey+1.6}" r="0.9" fill="#fff" opacity=".8"/>`;
+    s+=`<circle cx="${cx+ex}" cy="${ey}" r="${er}" fill="#2b1810"/><circle cx="${cx+ex+1.7}" cy="${ey-1.7}" r="1.8" fill="#fff"/><circle cx="${cx+ex-1.4}" cy="${ey+1.6}" r="0.9" fill="#fff" opacity=".8"/>`;
+  }
+  if(c.lash){
+    s+=`<path d="M ${cx-ex-er-1} ${ey-4} l -4 -3 M ${cx+ex+er+1} ${ey-4} l 4 -3" stroke="#2b1810" stroke-width="2" stroke-linecap="round"/>`;
+  }
+  s+=`<circle cx="${cx-rx*0.55}" cy="${hcy+r*0.3}" r="${r*0.13}" fill="#ff8fa0" opacity=".35"/><circle cx="${cx+rx*0.55}" cy="${hcy+r*0.3}" r="${r*0.13}" fill="#ff8fa0" opacity=".35"/>`;
+  if(c.kid){
+    s+=`<path d="M ${cx-8} ${hcy+r*0.33} Q ${cx} ${hcy+r*0.6} ${cx+8} ${hcy+r*0.33} Z" fill="#9c4a52"/>`;
+  }else{
+    const mw=rx*0.30,my=hcy+r*0.40;
+    s+=`<path d="M ${cx-mw} ${my} Q ${cx} ${my+r*0.17} ${cx+mw} ${my}" stroke="${c.lip?'#e0556f':'#9c4a52'}" stroke-width="${c.lip?4.5:3.5}" fill="none" stroke-linecap="round"/>`;
+  }
+  if(c.sparkle){
+    s+=`<text x="${cx+rx+6}" y="${hcy-r*0.55}" font-size="17">✨</text><text x="${cx-rx-22}" y="${hcy+r*1.0}" font-size="13">✨</text>`;
+  }
+  return s;
+}
+function equippedOutfit(key){
+  return ITEMS.find(it=>it.style&&it.who===key&&shop.equipped[it.id]);
+}
+function personSVGWrap(key){
+  let c={...CHARS[key]};
+  const o=equippedOutfit(key);
+  if(o)c={...c,...o.style};
+  let extra='';
+  if(o&&o.style.hat){
+    const topY=300-c.h;
+    extra='<text x="100" y="'+(topY+4)+'" font-size="26" text-anchor="middle">'+o.style.hat+'</text>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 320">'+personSVG(c)+extra+'</svg>';
+}
+
+/* ---------------- daily character lines ---------------- */
+const TALKERS=[
+ {key:'james',emoji:'😊',name:'James'},
+ {key:'annikka',emoji:'💁🏻‍♀️✨',name:'Annikka'},
+ {key:'sis',emoji:'👩🏻',name:'Your sister'},
+ {key:'bil',emoji:'🧑🏻‍🦱',name:'Your bro-in-law'},
+ {key:'niece',emoji:'👧🏻🎀',name:'Your niece'},
+ {key:'alvin',emoji:'🧍🏻‍♂️',name:'Alvin'},
+ {key:'fumei',emoji:'🐻',name:'Fumei'},
+ {key:'alvas',emoji:'🧘🏻‍♂️',name:'Alvas'}
+];
+const LINES={
+james:[
+"Thirteen years in, and you still amaze me. Today included.",
+"I made coffee. Come tell me about your day.",
+"You don't have to be perfect today. Just here.",
+"I'd pick you again. Every time. Easy choice.",
+"One day at a time — and I'm in all of them.",
+"Being proud of you isn't a feeling, it's my full-time job.",
+"Rough day? My shoulder's rated for heavy loads.",
+"You showed up today. That's the whole assignment.",
+"Dinner's on me tonight. You just keep being you.",
+"The strongest thing you do is ask for help. Keep doing it.",
+"Hey. Look at me. You're doing it. Really.",
+"I don't need the old you back. I like this one.",
+"Waves pass. I stay. That's the deal.",
+"You + me + a dumb dog. Best team in the league.",
+"Text me at a 7. Text me at a 2. Just text me.",
+"Today's win: you opened this app. Counts.",
+"I bragged about you to a coworker today. No regrets.",
+"Slow progress is still progress. Walk with me.",
+"You're not a burden. You're the point.",
+"Remember year one of us? You've always been brave.",
+"I'll hold the worry tonight. You hold the remote.",
+"Your honesty on hard days? That's my favorite muscle.",
+"We measure in days now. Later, in decades.",
+"If today is heavy, hand me a corner of it.",
+"You laughed yesterday. I noticed. More of that.",
+"No speech today. Just: I love you. Go get 'em.",
+"You're allowed to rest. Resting is training too.",
+"I see the effort nobody claps for. I'm clapping.",
+"Hard day? We've beaten 100% of those so far.",
+"You picked recovery again today. That's romance, honestly.",
+"Buimeen and I voted: you're the best. Unanimous.",
+"Come home safe. That's always the only plan.",
+"Your streak is cool. Your courage is cooler.",
+"I'm not going anywhere. Ever. Now hydrate.",
+"Thirteen years down. Forever to go. Keep walking."],
+annikka:[
+"Darling, recovery looks GORGEOUS on you. ✨",
+"I'm the pretty one, but today? You're the strong one.",
+"Urges are so last season. You? Timeless.",
+"Text James first, cry second, sparkle third. ✨",
+"You survived 100% of your worst days. Iconic.",
+"Honesty is the best highlighter. You're glowing.",
+"One more on-track day and I'm calling the press.",
+"Even your bad days have better posture than most people's good ones.",
+"Who gave you permission to be this resilient? Me. I did.",
+"Hydrate, gorgeous. Dehydration is a scandal.",
+"The wave peaks in 20 minutes. Your fabulousness? Never.",
+"Watching you grow is my favorite show, darling.",
+"That craving? Blocked. Reported. Unfollowed.",
+"You're not behind. You're on YOUR schedule, sweetie.",
+"Recovery is a runway and you are walking it. ✨",
+"Numb days are allowed. I'll be loud enough for two.",
+"You did a hard thing quietly today. I saw it.",
+"The streak is cute, but the courage? Couture.",
+"Buimeen says woof. I say WERK.",
+"Deep breath, darling. Alvas taught me. It works.",
+"Three gratitudes a day keeps the gremlins away.",
+"If you stumble, you stumble in heels. Then you stand up.",
+"I'm keeping your secrets and your streak. Both safe.",
+"A 7/10 wave? Call someone. Queens delegate. ✨",
+"You're doing better than you think. I checked. Twice.",
+"Rest is glam maintenance. Go rest, superstar.",
+"Your comeback story has a better wardrobe than most.",
+"Those bones you earned? Darling, that's rich.",
+"Progress, not perfection. Perfection is boring anyway.",
+"I lit a candle for you. It's scented. You're welcome.",
+"Nobody fights waves alone on my watch. NOBODY.",
+"Look at this app. Look at YOU. Growth, darling.",
+"Today's affirmation: you're the moment. That's it.",
+"I'd trade my best lipstick for your courage. ...Almost.",
+"One year from now you'll thank today-you. So will I. ✨"],
+sis:[
+"Hey you. Hotpot soon? Your niece misses her uncle.",
+"I'm so proud of you I told the whole market.",
+"Eat something warm today, okay? Doctor's orders. (I'm not a doctor.)",
+"You were brave before this. You're braver now.",
+"The couch, a blanket, and me listening. Standing offer.",
+"Little brother energy, giant courage. That's you.",
+"Your niece drew you again. You have a cape in this one.",
+"Call me after your meeting? I'll have tea ready.",
+"Hard days don't scare me. Family doesn't flinch.",
+"You're allowed to be tired. Come be tired at ours.",
+"One day at a time, and Sunday dinner at ours.",
+"I keep your baby photos AND your victories. Both safe.",
+"You ate? You slept? Okay good. I worry. It's my job.",
+"The bravest person I know shares my childhood. Weird, right?",
+"Our door doesn't lock for you. Never has.",
+"Dumplings this weekend. Non-negotiable. Bring Buimeen.",
+"I see how hard you're trying. We all do.",
+"You're the uncle she brags about at school. Fact.",
+"Even on your worst day, you're my favorite call.",
+"Soup is love you can eat. Making you some.",
+"You don't have to earn our love. It's pre-paid.",
+"Need company at a meeting? I'll drive. Anytime.",
+"Mom's recipe tonight. Your chair is waiting.",
+"Crying counts as self-care. So does seconds at dinner.",
+"You kept going this week. That's the whole miracle.",
+"Your niece says you're 'stronger than a T-Rex.' Confirmed.",
+"Text me three good things. I'll text back five about you.",
+"I've watched you climb. The view is getting good.",
+"Rest, hydrate, call your sister. In any order.",
+"You're not alone at the table. Ever. Scoot in.",
+"Big feelings welcome here. We have tissues and snacks.",
+"Proud isn't a big enough word. I'm inventing a new one.",
+"The family group chat is 80% cheering for you. The rest is recipes.",
+"You showed up for yourself today. Now show up for dinner.",
+"Love you, little sprout. Always have. Always will."],
+bil:[
+"*nods approvingly*",
+"Good work.",
+"Saw your streak. Solid.",
+"Proud of you. That's the sentence.",
+"*gives thumbs up, returns to grilling*",
+"You good? ...Good.",
+"Keep going. That's it. That's the advice.",
+"*quietly fixes your squeaky door while you're at a meeting*",
+"Strong move, checking in today.",
+"Respect.",
+"*nods twice — that's a big deal*",
+"Need anything lifted, moved, or built? Say the word.",
+"One day at a time. Smart system.",
+"You did the hard thing. Noticed.",
+"*silently adds extra meat to your plate*",
+"No lecture. Just lunch. You in?",
+"Your niece likes you best. I'm okay with it.",
+"Tough week? Garage is open. Tools are calming.",
+"Keep it simple. Keep it going.",
+"*pats shoulder exactly once, perfectly*",
+"You're doing it right.",
+"Saw you walk Buimeen. Good pace.",
+"Honest days beat perfect days.",
+"*nods in fluent brother-in-law*",
+"You matter around here. Plain fact.",
+"Hard days build quiet strength. You've got both.",
+"Barbecue Saturday. Zero pressure. Full plate.",
+"That's a strong streak. Built like a deck. Sturdy.",
+"Asking for help is a power tool. Use it.",
+"*raises mug slightly in your direction*",
+"Not a man of words. Am a man of showing up.",
+"You keep showing up. Same.",
+"Steady wins. You're steady.",
+"Proud. Don't tell anyone I said a whole word.",
+"*nods. The biggest nod yet.*"],
+niece:[
+"UNCLE!! you're doing AMAZING!! i told my teacher!!",
+"i drew you with a CAPE today because you're a HERO",
+"buimeen is the best dog and YOU'RE the best uncle!!",
+"mama says you're brave and mama is ALWAYS right",
+"when i grow up i wanna be strong like YOU",
+"GUESS WHAT. you're my favorite uncle. (there are no other uncles) (still counts)",
+"i made you a sticker!! it says SUPER UNCLE!!",
+"my class thinks you're cool. i showed them your dog!!",
+"hugs are free and i have INFINITY of them for you",
+"you + me + buimeen = BEST TEAM EVERRR",
+"i ate my veggies today so YOU can do hard stuff too!!",
+"star of the week is YOU. i voted. it counts.",
+"i learned the word 'persevere'!! it means YOU!!",
+"dumplings soon?? i saved you the seat next to ME",
+"you're stronger than a T-REX and that's SCIENCE",
+"i put a gold star on the calendar for you TODAY",
+"my drawing of buimeen is green. he likes it. probably.",
+"UNCLE UNCLE UNCLE hi hi hi I LOVE YOU bye!!",
+"mama cried happy tears about you. happy ones!!",
+"you can do it!! that's what you tell ME and it WORKS",
+"i told buimeen a secret. it was about how cool you are.",
+"rainbow sticker for you because rainbows = brave people",
+"my teacher says practice makes progress. YOU practice EVERY DAY",
+"can we have a picnic?? you bring buimeen i bring COOKIES",
+"you're on my fridge!! that's the HALL OF FAME",
+"i made up a dance for your streak. it has SPINS.",
+"being brave is scary and you do it ANYWAY!! wow!!",
+"i love you more than recess. THAT'S A LOT.",
+"superheroes rest too!! even BATMAN naps probably",
+"one day at a time is like eating a GIANT cookie. bite by bite!!",
+"you came to dinner and it was the BEST dinner",
+"my birthday candle wish was for YOU. (it still works if family knows. i checked.)",
+"BIG NEWS: you're doing great. that's it. BYEEE",
+"i'm proud of you!! kids can be proud too it's ALLOWED",
+"woof means 'i love you' in dog. buimeen says it A LOT about you"],
+alvin:[
+"yo. still proud. still not making it weird.",
+"your streak is stupid impressive. keep being stupid impressive.",
+"i don't do feelings but like. you're doing great. ok bye.",
+"bro. BRO. look at your stats. absurd.",
+"checked the app? nice. that's discipline. respect.",
+"if you need me i'm one text away. don't be weird about it.",
+"you're like, annoyingly resilient. keep it up.",
+"hard day? valid. tomorrow's a rematch. you win those.",
+"told my gym buddy about you. he said 'strong.' he's right.",
+"not crying. allergies. anyway, proud of you.",
+"you + recovery = better than any montage. and i LOVE montages.",
+"keep stacking days like i stack protein. consistently.",
+"bro you've outlasted every craving so far. undefeated. UNDEFEATED.",
+"this is me checking in. this is you being awesome. carry on.",
+"the fam chat is 90% your fan club now. i started it. don't make it weird.",
+"small wins count. i counted. there's loads.",
+"you doing meetings is lowkey the coolest thing in the family.",
+"if anyone gives you trouble i will politely glare. tall guy privileges.",
+"drink water. that's it. that's the text.",
+"one day at a time is basically reps. you're jacked now. mentally.",
+"yo, honest days > perfect days. you nailed another one.",
+"can't believe we're related. you're too impressive. suspicious.",
+"saw a dog today. thought of buimeen. thought of you. nice moment.",
+"you keep choosing the hard right thing. main character stuff.",
+"no advice today. just: proud, bro. that's the whole text.",
+"your comeback arc beats most movies. and i've seen ALL of them.",
+"tough wave? 20 minutes max. you've outlasted way worse.",
+"the duolingo owl fears your consistency.",
+"bro you're writing gratitude lists?? who ARE you. keep going.",
+"told mom's photo about your streak. felt right.",
+"you. me. game night. soon. loser hugs the winner. everyone wins.",
+"your worst day didn't stop you. that's the stat that matters.",
+"fist bump through the phone. receive it. 👊",
+"ok one mushy thing: i look up to you. DELETE AFTER READING.",
+"keep going, bro. that's an order from your extremely tall brother."],
+fumei:[
+"People think I'm a bear. It's the hoodie. Underneath is 100% proud-of-you human. 🐻",
+"Bear hug incoming. Brace. It's non-refundable.",
+"Little friend, your courage is bigger than my hoodie. And my hoodie is HUGE.",
+"I carry heavy things for fun. Hand me a worry — I have room.",
+"Slow and steady. I nap. I still arrive.",
+"You are doing the strongest kind of quiet work.",
+"Today's forecast: 100% chance of being enough.",
+"Lean on me. Structurally rated for feelings.",
+"Proud of you. That never changes.",
+"One more day in the den of honesty. Well done.",
+"Big waves look smaller with a friend beside you. I'm beside you.",
+"I saved you the warmest spot. It's next to me. The hoodie radiates.",
+"Rest is not quitting. Even mountains sit still.",
+"You showed up again. The pack noticed. The hoodie guy noticed hardest.",
+"Your streak is growing like a cub. Feed it daily.",
+"Honey helps. Hugs help more. I have both.",
+"Look how far behind your old struggles are. I checked. Far.",
+"Strength isn't loud. Yours hums quietly every day.",
+"I believe in you with my entire enormous heart.",
+"Hibernate your doubts. Spring your courage.",
+"You endured 100% of your hardest days. Bear-hoodie-approved stat.",
+"The forest is patient. So is recovery. So am I.",
+"Today you were kind to yourself. Big paw of approval. (It's a glove. The glove has paws.)",
+"Small steps count double when they're honest ones.",
+"If the day is heavy, I'll carry the afternoon.",
+"Your honesty makes the whole den warmer.",
+"Even on gray days, you're someone's whole sky. Ask James.",
+"Keep your snacks close and your pack closer.",
+"I measured your progress in hugs. Several hundred. Impressive.",
+"Soft heart, strong will. Rare combo. You have both.",
+"The wave will tire before you do. Huggers know stamina.",
+"You're never too big to be held. Hoodie-guy's honor.",
+"Walk with Buimeen today. Tell him the hoodie bear says hi.",
+"Trees grow rings. So do you. Another day, another ring.",
+"And if standing tall feels hard today — I'll hug you exactly where you are."],
+alvas:[
+"Breathe in four... hold seven... out eight. There you are. 🧘🏻‍♂️",
+"The urge is a wave. You are the ocean. Remain the ocean.",
+"Today, be where your feet are. That's the whole practice.",
+"You cannot stop the waves. You're learning to surf. Beautifully.",
+"One honest day is worth ten perfect-looking ones.",
+"Notice the craving. Name it. Watch it walk past.",
+"Peace is not the absence of storms. It's you, breathing in one.",
+"Your streak is impressive. Your awareness is more so.",
+"Slow is smooth. Smooth is healing.",
+"Sit with Buimeen for five minutes. That's meditation too.",
+"You've already survived every storm you were sure would sink you.",
+"Thoughts are clouds. You are the sky. The sky is fine.",
+"Progress whispers. Be quiet enough to hear yours.",
+"A tough day is a teacher with bad manners. Still a teacher.",
+"Drink water like it's a small ceremony. It is.",
+"The present moment is the only place recovery happens. You're in it.",
+"Inhale courage. Exhale your inner critic's opinion.",
+"You walked today. The path noticed.",
+"Craving at a 7? That's a 20-minute guest. Don't offer it a room.",
+"Gratitude is attention, trained kindly. You train daily.",
+"Even the bamboo bends before it stands tallest.",
+"Rest. The river does not rush, and it always arrives.",
+"Your breath has been with you through everything. Thank it.",
+"Numbness is weather, not climate. Stay planted.",
+"Begin again. That's not failure — that's the practice itself.",
+"I watched you choose peace today. Quietly magnificent.",
+"The mind says 'hurry.' The healing says 'steady.' Trust healing.",
+"You are not your worst moment. You are this one. It's calm here.",
+"Step, breath, step. Buimeen understands. Follow the dog.",
+"An anxious mind cannot live in a relaxed body. Unclench the jaw.",
+"Today's win: you noticed. Noticing is everything.",
+"Streaks bloom like lotus flowers — rooted in mud, rising anyway.",
+"Let the evening be soft. You've carried enough today.",
+"Smile gently at the hard feeling. It expected a fight.",
+"Namaste, friend. The calm in me salutes the courage in you."]
+};
+const YOU_LINES=[
+"That's you — the hero of this whole story. 💪",
+"Look at this person. They showed up today. Legend.",
+"Be as kind to yourself as the pack is to you. 💛",
+"Behind the camera, holding the frame together. That's you.",
+"You, next to Buimeen, exactly where you belong. 🐾",
+"Future you is already grateful for today you.",
+"Main character. No notes. 🎬"];
+const WOOFS=["Woof! 🐾","WOOF WOOF! 🦴","Woof~ *tail helicopter* 🚁","BORF! 💛","Awooo~ 🐶","Woof! *biggest smile in dog history*"];
+
+let smileT;
+function smileDog(){
+  const s=$('gSmile');s.setAttribute('display','inline');
+  clearTimeout(smileT);smileT=setTimeout(()=>s.setAttribute('display','none'),1700);
+}
+function cloneArt(sel){
+  const n=document.querySelector(sel).cloneNode(true);
+  n.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
+  n.removeAttribute('id');
+  return n;
+}
+function packLine(key){
+  if(key==='buimeen')return WOOFS[DAYNUM%WOOFS.length]+"\n\n(Translation: you are deeply, extremely loved. Also: snacks?)";
+  if(key==='you')return YOU_LINES[DAYNUM%YOU_LINES.length];
+  const i=TALKERS.findIndex(t=>t.key===key);
+  return LINES[key][(DAYNUM+i*7)%35];
+}
+function charPopup(key,line,footer){
+  let name,info;
+  const art=$('charArt');art.innerHTML='';
+  if(key==='buimeen'){name='Buimeen 🐶';info='Best boy · bone accountant';art.appendChild(cloneArt('#dog svg'));}
+  else if(key==='you'){name='You 🧑🏻';info=CHARS.you.info;art.appendChild(cloneArt('#me svg'));}
+  else{
+    const t=TALKERS.find(t=>t.key===key);
+    name=t.name+' '+t.emoji;info=CHARS[key].info;
+    const o=equippedOutfit(key);
+    if(o)info+=' · wearing: '+o.icon+' '+o.name;
+    art.innerHTML=personSVGWrap(key);
+  }
+  $('charBubble').textContent=line+(footer?'\n\n'+footer:'');
+  $('charName').textContent=name;
+  $('charInfo').textContent=info;
+  $('charModal').classList.add('show');
+}
+$('charClose').onclick=()=>$('charModal').classList.remove('show');
+$('charModal').onclick=e=>{if(e.target.id==='charModal')$('charModal').classList.remove('show')};
+$('talkBtn').onclick=()=>{
+  const t=TALKERS[Math.floor(Math.random()*TALKERS.length)];
+  charPopup(t.key,LINES[t.key][Math.floor(Math.random()*35)],'🎲 Surprise cheer!');
+};
+
+/* ---------------- daily support buddy ---------------- */
+const buddyT=TALKERS[DAYNUM%TALKERS.length];
+function renderBuddy(){
+  $('buddy').innerHTML=personSVGWrap(buddyT.key);
+  $('buddyName').textContent=buddyT.name;
+  $('buddyCap').textContent='💛 Today\'s support buddy: '+buddyT.name+' '+buddyT.emoji+' — tap for a boost!';
+}
+$('buddy').onclick=()=>{
+  const b=$('buddy');b.classList.remove('bounce');void b.offsetWidth;b.classList.add('bounce');
+  charPopup(buddyT.key,LINES[buddyT.key][Math.floor(Math.random()*35)],'💛 I\'m your support buddy today. Tap me anytime.');
+};
+
+/* ---------------- Annikka support ---------------- */
+function annikkaLive(v){
+  const box=$('annikkaBox');
+  if(v>=7){
+    box.style.display='block';
+    box.innerHTML="💁🏻‍♀️✨ <b>Annikka's here. Don't you dare ride a "+v+"/10 alone.</b>\n"+
+      "This is a big wave, not a command — waves peak and pass in ~20–30 min.\n\n"+
+      "① 🧊 Cold water on face & wrists\n"+
+      "② 📱 Text 😊 James — <i>now</i>, not after\n"+
+      "③ 🚶 Walk Buimeen around the block\n"+
+      "④ 🫁 4-7-8 breathing ×4 (Alvas-approved 🧘🏻‍♂️)\n"+
+      "⑤ Heavy? Counsellor, a meeting, or your crisis line\n\n"+
+      "You've outlasted <b>every wave so far</b>. 100% record. I'm staying right here. ✨";
+  } else box.style.display='none';
+}
+function annikkaToughDay(){
+  showModal('💁🏻‍♀️','A note from Annikka ✨',
+    "Hey. It's me, the pretty one — and right now, the stubborn one.\n\n"+
+    "You opened this app on a HARD day and told the truth. That's not failure, darling — that's courage with good lighting.\n\n"+
+    "Your gifts are safe. Your bones are safe. Your streak record is safe. Tomorrow is a brand-new page and I've already picked out its outfit.\n\n"+
+    "Tonight: water, food, text James, let Buimeen sit on your feet.\n\n+1 🦴 for honesty. We love you. All of us. ✨");
+}
+
+/* ---------------- modal / toast / confetti ---------------- */
+function showModal(icon,title,body){$('modalIcon').textContent=icon;$('modalTitle').textContent=title;$('modalBody').textContent=body;$('modal').classList.add('show');}
+$('modalClose').onclick=()=>$('modal').classList.remove('show');
+$('modal').onclick=e=>{if(e.target.id==='modal')$('modal').classList.remove('show')};
+let toastT;
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+function confetti(){const em=['🎉','🦴','🐾','💛','✨','🎾'];for(let i=0;i<24;i++){const s=document.createElement('span');s.className='conf';s.textContent=em[i%em.length];s.style.left=Math.random()*100+'vw';s.style.animationDelay=(Math.random()*.8)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3400);}}
+
+/* ---------------- MINI GAMES — 7.0 HARD MODE ---------------- */
+let gTimers=[];
+function gClear(){gTimers.forEach(t=>{clearTimeout(t);clearInterval(t)});gTimers=[];}
+
+function winGame(){
+  if(!gameLog.days[todayStr()]){
+    gameLog.days[todayStr()]=true;saveJ(K_GAME,gameLog);
+    confetti();toast('🎮 Daily game complete! +3 🦴');
+    renderAll();
+  } else toast('Nice one! 💛');
+}
+
+function gBreath(area){
+  area.innerHTML='<div style="text-align:center"><div id="gbPhase" style="font-weight:800;font-size:1.15rem;min-height:1.7rem">Ready when you are 💛</div>'+
+  '<div id="gbCirc" class="gcircle"></div><div class="meta" id="gbRound" style="min-height:1.2rem"></div>'+
+  '<div class="btns" style="justify-content:center"><button id="gbStart">Start breathing 🫁</button></div></div>';
+  const circ=$('gbCirc'),ph=$('gbPhase'),rd=$('gbRound');
+  $('gbStart').onclick=function(){
+    this.disabled=true;
+    const steps=[['Breathe in… 👃',4,1.35],['Hold… ✋',7,1.35],['Breathe out… 💨',8,0.75]];
+    let round=0;
+    function run(i){
+      if(i===0){round++;if(round>3){ph.textContent='Three full rounds. Deeply calm. 🌿';rd.textContent='';winGame();return}rd.textContent='Round '+round+' of 3';}
+      const st=steps[i];
+      ph.textContent=st[0];
+      circ.style.transition='transform '+st[1]+'s ease-in-out';
+      circ.style.transform='scale('+st[2]+')';
+      gTimers.push(setTimeout(()=>run((i+1)%3),st[1]*1000));
+    }
+    run(0);
+  };
+}
+function gSort(area){
+  const good=['📞 Call James','🐶 Walk Buimeen','💧 Drink water','🫁 Breathe 4-7-8','🪑 Go to a meeting','✍️ Write it down'];
+  const bad=['😈 "Just one won\'t hurt"','😈 "Hide it"','😈 "You\'re alone"','😈 "Give up"','😈 "Nobody will know"','😈 "You already failed"'];
+  function build(){
+    const all=[...good.map(t=>({t,good:true})),...bad.map(t=>({t,good:false}))].sort(()=>Math.random()-.5);
+    area.innerHTML='<div class="meta" id="gsMsg" style="text-align:center;min-height:1.4rem;margin-bottom:8px;font-weight:700">Find all 6 HELPFUL thoughts — 3 wrong taps resets! 💛</div><div class="sortgrid" id="gsGrid"></div>';
+    const grid=$('gsGrid');let found=0,strikes=0;
+    all.forEach(o=>{
+      const b=document.createElement('button');b.className='gthought';b.textContent=o.t;
+      b.onclick=()=>{ if(b.disabled)return;
+        if(o.good){b.classList.add('good');b.disabled=true;found++;$('gsMsg').textContent=found+'/6 found · strikes '+strikes+'/3';
+          if(found===6){$('gsMsg').textContent='All 6 — your toolkit is sharp. 🧰🏆';winGame();}}
+        else{b.classList.add('bad');b.disabled=true;strikes++;
+          if(strikes>=3){$('gsMsg').textContent='3 strikes — the urge tricked you. Fresh board! 😤';gTimers.push(setTimeout(build,900));}
+          else $('gsMsg').textContent='That\'s the urge talking! Strike '+strikes+'/3 ⚠️';}
+      };
+      grid.appendChild(b);
+    });
+  }
+  build();
+}
+function gMemory(area){
+  const em=['🦴','🐾','💛','🎾','🐶','🌟'];const cards=[...em,...em].sort(()=>Math.random()-.5);
+  area.innerHTML='<div class="meta" style="text-align:center;margin-bottom:8px;font-weight:700" id="gmMsg">Hard mode: find all 6 pairs! 🃏</div><div class="memgrid" id="gmGrid"></div>';
+  const grid=$('gmGrid');let open=[],lock=false,matched=0;
+  cards.forEach(e=>{
+    const b=document.createElement('button');b.className='memcard';b.textContent='❔';
+    b.onclick=()=>{ if(lock||b.classList.contains('up')||b.classList.contains('ok'))return;
+      b.textContent=e;b.classList.add('up');open.push({b,e});
+      if(open.length===2){lock=true;
+        gTimers.push(setTimeout(()=>{
+          if(open[0].e===open[1].e){open.forEach(o=>o.b.classList.add('ok'));matched++;
+            $('gmMsg').textContent=matched+'/6 pairs!';
+            if(matched===6){$('gmMsg').textContent='All 6 pairs! Steel-trap mind. 🏆';winGame();}}
+          else open.forEach(o=>{o.b.textContent='❔';o.b.classList.remove('up')});
+          open=[];lock=false;
+        },600));}
+    };
+    grid.appendChild(b);
+  });
+}
+function gSurf(area){
+  area.innerHTML='<div style="text-align:center"><div style="font-size:2.2rem">🌊🏄🐶</div>'+
+  '<div class="bar" style="height:16px;margin:12px 0"><i id="gfBar" style="width:0%"></i></div>'+
+  '<div class="meta" id="gfMsg" style="min-height:2.4rem">Hard mode: ride the wave for 25s. ⚠️ Letting go slowly DRAINS your progress — hold strong!</div>'+
+  '<div class="btns" style="justify-content:center"><button id="gfHold" style="min-height:72px;min-width:220px;touch-action:none;-webkit-user-select:none;user-select:none">HOLD ON 🏄</button></div></div>';
+  let p=0,held=false,done=false;
+  const iv=setInterval(()=>{ if(done)return;
+    if(held){p+=0.1;}else{p=Math.max(0,p-0.06);}
+    $('gfBar').style.width=Math.min(100,p/25*100)+'%';
+    if(p>=25){done=true;held=false;clearInterval(iv);$('gfMsg').textContent='25 seconds. The wave broke, you didn\'t. 🌅🏆';winGame();}
+  },100);
+  gTimers.push(iv);
+  const btn=$('gfHold');
+  const on=e=>{e.preventDefault();if(!done){held=true;$('gfMsg').textContent='Riding it… 🌊 don\'t let go…';}};
+  const off=()=>{held=false;if(!done)$('gfMsg').textContent='⚠️ Draining! Grab back on!';};
+  btn.addEventListener('pointerdown',on);btn.addEventListener('pointerup',off);
+  btn.addEventListener('pointercancel',off);btn.addEventListener('pointerleave',off);
+}
+function gWord(area){
+  const words=['RESILIENCE','GRATITUDE','SERENITY','ACCEPTANCE','DISCIPLINE','COMMUNITY','WILLINGNESS'];
+  const w=words[DAYNUM%words.length];
+  let letters=w.split('').sort(()=>Math.random()-.5);
+  if(letters.join('')===w)letters.reverse();
+  area.innerHTML='<div class="meta" style="text-align:center;font-weight:700">Hard mode — unscramble today\'s BIG recovery word ('+w.length+' letters):</div>'+
+  '<div id="gwOut" style="text-align:center;font-size:1.4rem;font-weight:800;letter-spacing:3px;min-height:2.2rem;margin:8px 0">_</div>'+
+  '<div class="wordgrid" id="gwGrid"></div>'+
+  '<div class="btns" style="justify-content:center"><button class="sec" id="gwReset">Reset ↺</button></div>'+
+  '<div class="meta" id="gwMsg" style="text-align:center;min-height:1.3rem"></div>';
+  let cur='';const grid=$('gwGrid');
+  const draw=()=>{$('gwOut').textContent=cur||'_'};
+  letters.forEach(L=>{
+    const b=document.createElement('button');b.className='wletter';b.textContent=L;
+    b.onclick=()=>{ if(b.disabled)return; cur+=L;b.disabled=true;draw();
+      if(cur.length===w.length){ if(cur===w){$('gwMsg').textContent='YES! '+w+' — that\'s you. 💪🏆';winGame();}
+        else $('gwMsg').textContent='Not quite — reset and try again! 💛'; } };
+    grid.appendChild(b);
+  });
+  $('gwReset').onclick=()=>{cur='';draw();$('gwMsg').textContent='';grid.querySelectorAll('button').forEach(b=>b.disabled=false);};
+  draw();
+}
+function gQuiz(area){
+  const QS=[
+   ['Urges usually peak and pass in about 20–30 minutes.',true],
+   ['One tough day erases all of your progress.',false],
+   ['Asking for help is a sign of strength.',true],
+   ['You have survived 100% of your hardest days so far.',true],
+   ['You should ride a 7/10 urge completely alone.',false],
+   ['Food, water and sleep make urges easier to handle.',true],
+   ['Recovery has to be perfect to count.',false],
+   ['Telling James during a wave works better than after.',true],
+   ['A walk with Buimeen can help a craving pass.',true],
+   ['HALTS stands for Hungry, Angry, Lonely, Tired, Stressed.',true],
+   ['WHO in recovery means Willingness, Honesty, Open-mindedness.',true],
+   ['Skipping meals makes cravings weaker.',false]
+  ];
+  const start=(DAYNUM*5)%QS.length;
+  const qs=[0,1,2,3,4].map(k=>QS[(start+k)%QS.length]);
+  let i=0;
+  area.innerHTML='<div id="gqQ" style="font-weight:800;text-align:center;min-height:3rem"></div>'+
+  '<div class="meta" id="gqMsg" style="text-align:center;min-height:1.3rem">Hard mode: 5 questions — one wrong answer restarts from Q1! ⚠️</div>'+
+  '<div class="btns" style="justify-content:center"><button id="gqT">True ✅</button><button class="sec" id="gqF">False ❌</button></div>'+
+  '<div class="meta" style="text-align:center;margin-top:6px" id="gqProg"></div>';
+  const show=()=>{$('gqQ').textContent=qs[i][0];$('gqProg').textContent='Question '+(i+1)+' of 5';};
+  function answer(v){
+    if(v===qs[i][1]){ i++;
+      if(i===5){$('gqQ').textContent='5/5 PERFECT — Buimeen awards the Golden Cookie. 🍪👑';$('gqMsg').textContent='';$('gqProg').textContent='';$('gqT').disabled=true;$('gqF').disabled=true;winGame();}
+      else {$('gqMsg').textContent='Correct! 🐾';show();}
+    } else {i=0;$('gqMsg').textContent='Ouch — back to question 1! Buimeen hides his eyes. 🙈';show();}
+  }
+  $('gqT').onclick=()=>answer(true);$('gqF').onclick=()=>answer(false);
+  show();
+}
+function gWhack(area){
+  area.innerHTML='<div class="meta" style="text-align:center;font-weight:700" id="ghMsg">Hard mode: bop him 12 times — missing costs a bop! 👾</div><div class="ggrid" id="ghGrid" style="margin-top:8px"></div>';
+  const grid=$('ghGrid');const cells=[];
+  for(let i=0;i<9;i++){const b=document.createElement('button');b.className='gcell';b.textContent='·';grid.appendChild(b);cells.push(b);}
+  let pos=-1,hits=0,done=false;
+  function move(){ if(done)return; if(pos>-1)cells[pos].textContent='·'; pos=Math.floor(Math.random()*9); cells[pos].textContent='👾'; }
+  const iv=setInterval(move,560);gTimers.push(iv);move();
+  cells.forEach((b,idx)=>b.onclick=()=>{ if(done)return;
+    if(idx===pos){hits++;b.textContent='💥';pos=-1;$('ghMsg').textContent='Bop! '+hits+'/12 👾';
+      if(hits>=12){done=true;clearInterval(iv);$('ghMsg').textContent='12 bops! Gremlin filed a complaint. Denied. 🏆';winGame();}}
+    else{hits=Math.max(0,hits-1);$('ghMsg').textContent='Miss! −1 … now '+hits+'/12 😬';}
+  });
+}
+const GAMES=[
+ {icon:'🫁',name:'Breath Pacer',desc:'HARD: three full 4-7-8 rounds. Stay with it.',build:gBreath},
+ {icon:'💭',name:'Sort the Thoughts',desc:'HARD: 6 helpful thoughts hidden among 12 — 3 strikes resets the board.',build:gSort},
+ {icon:'🃏',name:'Bone Memory',desc:'HARD: 12 cards, 6 pairs. No pressure. (Some pressure.)',build:gMemory},
+ {icon:'🌊',name:'Urge Surfing',desc:'HARD: hold 25s — letting go drains your progress.',build:gSurf},
+ {icon:'🔤',name:'Word of Strength',desc:'HARD: longer recovery words to unscramble.',build:gWord},
+ {icon:'🧠',name:'Pup Quiz',desc:'HARD: 5 questions, one mistake restarts from Q1.',build:gQuiz},
+ {icon:'👾',name:'Bop the Craving Gremlin',desc:'HARD: 12 bops, faster gremlin, misses cost you.',build:gWhack}
+];
+let gameKey='';
+function renderGame(){
+  const idx=DAYNUM%GAMES.length,g=GAMES[idx];
+  const done=!!gameLog.days[todayStr()];
+  $('gameTitle').textContent='🎮 Today: '+g.icon+' '+g.name;
+  $('gameDesc').textContent=g.desc+(done?'  ·  ✅ done today (+3🦴 banked) — replays are just for fun!':'  ·  complete it once today for +3 🦴');
+  const key=todayStr()+'|'+idx;
+  if(key===gameKey)return;
+  gameKey=key;
+  gClear();
+  g.build($('gameArea'));
+}
+$('gameReplay').onclick=()=>{gameKey='';renderGame();};
+
+/* ---------------- render ---------------- */
+function streakCalc(){
+  let cur=0;const t=new Date();
+  for(let i=0;;i++){const d=new Date(t);d.setDate(t.getDate()-i);
+    const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const e=data[ds];
+    if(isOk(e))cur++;
+    else if(i===0&&!e)continue;
+    else break;}
+  const days=Object.keys(data).sort();let best=0,run=0,prev=null;
+  days.forEach(ds=>{if(isOk(data[ds])){if(prev){const p=new Date(prev),c=new Date(ds);run=((c-p)/86400000===1)?run+1:1}else run=1;prev=ds;best=Math.max(best,run)}else{prev=null;run=0}});
+  return{cur,best};
+}
+function renderAll(){
+  const days=Object.keys(data).sort();
+  const ok=okTotal();
+  const {cur,best}=streakCalc();
+  autoGrants(cur,best);
+  const b=computeBones();
+
+  $('streak').textContent=cur;$('streak').classList.toggle('zero',cur===0);
+  $('total').textContent=ok;$('longest').textContent=best;$('logged').textContent=days.length;
+  $('actionDays').textContent=days.filter(d=>(data[d].actions||[]).length).length;
+  $('meetCount').textContent=days.filter(d=>(data[d].actions||[]).includes('Meeting')).length;
+  $('counsCount').textContent=days.filter(d=>(data[d].actions||[]).includes('Counselling / therapy')).length;
+  $('bonesNow').textContent=b.now;
+  $('bonesTotal').textContent='lifetime earned: '+b.earned+' 🦴';
+
+  const L=levelFor(b.earned);
+  $('lvlTitle').textContent='Lv '+L.lvl+' · '+L.title;
+  $('xpText').textContent=L.r+'/'+L.need+' EXP';
+  $('xpBar').style.width=(L.r/L.need*100)+'%';
+  const prevL=+localStorage.getItem(K_LVL)||0;
+  if(prevL&&L.lvl>prevL){
+    confetti();
+    if(!$('modal').classList.contains('show'))
+      showModal('🎉','LEVEL UP! ⬆️','You are now Lv '+L.lvl+' — '+L.title+'!\n\nThe pack is doing the official level-up dance. Your niece choreographed it. There are spins. Fumei is surprisingly graceful for a man in a bear hoodie.');
+    else toast('⬆️ LEVEL UP! Lv '+L.lvl+' — '+L.title);
+  }
+  localStorage.setItem(K_LVL,L.lvl);
+
+  const msgs= cur===0?["Today is day one, and the whole pack is on the porch with you. 🐾"]
+    : cur<3?["Buimeen's tail is going. Keep going. 🐶","One paw in front of the other. 🐾"]
+    : cur<7?["The pack can smell a bandana coming... 🔴","Look at you GO. 💛"]
+    : cur<30?["Bandana unlocked! Buimeen is insufferable about it. 🔴🐶","Annikka says you're glowing. She would know. ✨"]
+    : ["👑 CROWN STREAK. James is telling strangers about you.","Royalty. Actual royalty. 👑"];
+  $('message').textContent=msgs[cur%msgs.length];
+
+  const nextOutfit=9*(Math.floor(best/9)+1);
+  const toGift=7-(ok%7);
+  $('next').textContent= (ok%7===0&&ok>0 ? 'Gift threshold reached! 🎁' : toGift+' on-track day'+(toGift>1?'s':'')+' to the next pack gift 🎁')
+    +' · '+(nextOutfit-best)+' streak day'+((nextOutfit-best)>1?'s':'')+' to new outfits 👔';
+
+  const members=['😊','💁🏻‍♀️','👩🏻','🧑🏻‍🦱','👧🏻','🧍🏻‍♂️','🐻','🧘🏻‍♂️','📸'];
+  $('pack').textContent=members.slice(0,Math.min(members.length,1+Math.floor(cur/2))).join(' ')+(cur>0?' 💛':'');
+
+  applyOutfits();renderBuddy();
+  renderDaily();renderGame();
+  renderQuests();renderMile(ok);renderGifts(ok);renderScenes();renderShop(b.now);renderPack();
+  renderCal();renderHistory();renderGrat();renderBackupInfo();
+
+  const cN=w=>ITEMS.filter(i=>i.who===w),oN=w=>cN(w).filter(i=>shop.owned.includes(i.id));
+  $('wardOwned').textContent='Owned: '+oN('dog').length+'/'+cN('dog').length+' 🐶 · '+oN('me').length+'/'+cN('me').length+' 🧑🏻 · '+
+    oN('james').length+'/11 😊 · '+oN('annikka').length+'/11 💁🏻‍♀️ · '+b.now+' 🦴 to spend';
+
+  const weeklyReady=Math.floor(ok/7)>gifts.claimed;
+  const mi=MILE.findIndex((m,i)=>ok>=m.req&&!gifts.mile.includes(i));
+  $('giftBanner').style.display=(weeklyReady||mi>-1)?'block':'none';
+  $('giftBannerText').textContent= mi>-1 ? '🏆 A BIG milestone chest is ready to open!' : '🎁 You have a gift waiting from the pack!';
+}
+function renderDaily(){
+  const e=data[todayStr()];
+  const g=e?[e.g1,e.g2,e.g3].filter(x=>x&&x.trim()).length:0;
+  const nA=e?(e.actions||[]).length:0;
+  const list=[
+   ['✅','Check in today',!!e,'+1🦴'],
+   ['🐾','All 3 paws on track',isOk(e),'+3🦴'],
+   ['💛','Write 3 gratitudes',g===3,'+2🦴'],
+   ['🐕‍🦺','Self-care ('+nA+'/3 done)',nA>0,'+1–3🦴 ea'],
+   ['🙌','WHO: all three ticked',!!(e&&e.who&&e.who.w&&e.who.h&&e.who.o),'+1🦴'],
+   ['📓','Journal + feeling',!!(e&&e.journal&&e.journal.trim()),'+1🦴'],
+   ['🍲','Care + meals + rest',!!(e&&e.meds&&e.ate&&e.slept),'+1🦴'],
+   ['🎮','Beat today\'s mini game',!!gameLog.days[todayStr()],'+3🦴']
+  ];
+  const done=list.filter(x=>x[2]).length;
+  $('dquests').innerHTML=list.map(x=>'<div class="dq'+(x[2]?' on':'')+'"><span>'+(x[2]?'✅':'⬜')+'</span><span>'+x[0]+' '+x[1]+'</span><span class="db">'+x[3]+'</span></div>').join('')+
+  '<div class="meta" style="text-align:center;margin-top:10px;font-weight:800">'+(done===8?'ALL 8 DONE — the pack is doing the dance! 🎉🐾':done+'/8 done today')+'</div>';
+}
+function renderQuests(){
+  const w=weekCounts()[mondayOf(todayStr())]||{couns:0,meet:0,spirit:0,walk:0,grat:0,check:0,ok:0,care:0,learn:0,note:0};
+  $('quests').innerHTML=QUESTS.map(q=>{
+    const n=Math.min(w[q.id]||0,q.target),done=n>=q.target;
+    return '<div class="quest'+(done?' done':'')+'"><div class="qt"><span>'+q.icon+' '+q.label+(done?' — done! 🏅':'')+'</span><span>'+n+'/'+q.target+' · +'+q.bonus+'🦴</span></div>'+
+      '<div class="bar"><i style="width:'+(n/q.target*100)+'%"></i></div></div>';
+  }).join('');
+}
+function renderMile(ok){
+  $('mileList').innerHTML=MILE.map((m,i)=>{
+    const claimed=gifts.mile.includes(i),ready=!claimed&&ok>=m.req;
+    return '<div class="gift '+(ready?'ready':claimed?'':'locked')+'">'+
+      '<div class="gi">'+m.icon+'</div><div class="gb"><b>'+m.name+'</b>'+
+      '<span>'+m.req+' on-track days · '+(claimed?'opened 💛':ready?'READY! 🎉':Math.min(ok,m.req)+'/'+m.req+' days')+' · +'+m.bones+'🦴'+(m.freebie?' + item!':'')+'</span></div>'+
+      (ready?'<button data-mile="'+i+'">Open 🎁</button>':claimed?'<button class="sec" data-mile="'+i+'">Re-read</button>':'')+
+      '</div>';
+  }).join('');
+  $('mileList').querySelectorAll('[data-mile]').forEach(b=>b.onclick=()=>openMile(+b.dataset.mile));
+}
+function openMile(i){
+  const m=MILE[i],ok=okTotal();
+  if(!gifts.mile.includes(i)){
+    if(ok<m.req)return;
+    gifts.mile.push(i);saveJ(K_GIFT,gifts);
+    if(m.freebie){grantItem(m.freebie,true);saveJ(K_SHOP,shop);}
+    confetti();setTimeout(confetti,500);
+  }
+  showModal(m.icon,m.name,m.body);
+  renderAll();
+}
+function renderGifts(ok){
+  const avail=Math.floor(ok/7), into=ok%7;
+  $('giftProgressText').textContent=into+'/7 toward gift #'+(gifts.claimed+1);
+  $('giftProgressBar').style.width=(avail>gifts.claimed?100:into/7*100)+'%';
+  let html='';
+  const showN=Math.max(gifts.claimed+2,4);
+  for(let i=0;i<showN;i++){
+    const g=giftAt(i);
+    const st= i<gifts.claimed?'claimed': (i<avail?'ready':'locked');
+    html+='<div class="gift '+(st==='ready'?'ready':st==='locked'?'locked':'')+'">'+
+      '<div class="gi">'+(st==='locked'?'🎁':g.icon)+'</div><div class="gb"><b>'+(st==='locked'?'Gift #'+(i+1)+' — a surprise from the pack':g.title)+'</b>'+
+      '<span>'+((i+1)*7)+' on-track days'+(st==='claimed'?' · opened 💛':st==='ready'?' · ready!':'')+'</span></div>'+
+      (st==='ready'?'<button data-open="'+i+'">Open 🎁</button>':st==='claimed'?'<button class="sec" data-open="'+i+'">Re-read</button>':'')+
+      '</div>';
+  }
+  $('giftList').innerHTML=html;
+  $('giftList').querySelectorAll('[data-open]').forEach(btn=>btn.onclick=()=>openGift(+btn.dataset.open));
+}
+function openGift(i){
+  const g=giftAt(i);
+  const avail=Math.floor(okTotal()/7);
+  if(i>=gifts.claimed){
+    if(i>=avail)return;
+    gifts.claimed=i+1;saveJ(K_GIFT,gifts);
+    if(g.acc){grantItem(g.acc,false);saveJ(K_SHOP,shop);}
+    confetti();
+  }
+  showModal(g.icon,g.title+'  ·  from '+g.from,g.body+(g.bones?'\n\n+'+g.bones+' 🦴':''));
+  renderAll();
+}
+$('giftBannerBtn').onclick=()=>{
+  const ok=okTotal();
+  const mi=MILE.findIndex((m,i)=>ok>=m.req&&!gifts.mile.includes(i));
+  if(mi>-1)openMile(mi);else openGift(gifts.claimed);
+};
+function renderScenes(){
+  const unlocked=[];
+  for(let i=0;i<gifts.claimed&&i<GIFT_LIST.length;i++){const g=GIFT_LIST[i];if(g.scene!==undefined)unlocked.push(SCENES[g.scene]);}
+  $('sceneList').innerHTML= unlocked.length? unlocked.map(s=>'<div class="scene"><div class="art">'+s.art+'</div><div class="cap">'+s.cap+'</div></div>').join('')
+    : '<div class="meta">No scenes yet — your first ones are inside the gifts 🎁</div>';
+}
+
+/* ---------------- wardrobe popup (now 4 tabs) ---------------- */
+let wardTab='dog';
+const WCATS=['Bandanas','Hats','Glasses','Neck & badges','Outfits','Toys & held'];
+function shopRow(it,now){
+  const owned=shop.owned.includes(it.id),on=!!shop.equipped[it.id];
+  const free=shop.freebies.includes(it.id);
+  let small,btn;
+  if(owned){
+    small=free?'gift / earned 💛':'owned';
+    btn='<button class="'+(on?'on':'sec')+'" data-shop="'+it.id+'">'+(on?'Wearing ✓':'Put on')+'</button>';
+  }else if(it.price===null||it.price===0){
+    small='🔒 '+(it.unlock||'locked');
+    btn='<button class="sec" disabled>Locked</button>';
+  }else{
+    small=it.price+' 🦴';
+    btn='<button data-shop="'+it.id+'" '+(now<it.price?'disabled':'')+'>Buy</button>';
+  }
+  return '<div class="shopitem"><div class="si">'+it.icon+'</div><div class="sb">'+it.name+'<small>'+small+'</small></div>'+btn+'</div>';
+}
+function renderShop(now){
+  $('wardBones').textContent= (wardTab==='james'||wardTab==='annikka')
+    ? '👔 Outfits unlock every 9-day clean streak (best streak counts forever) 🔥'
+    : '🦴 '+now+' bones to spend';
+  $('tabDog').className=wardTab==='dog'?'':'sec';
+  $('tabMe').className=wardTab==='me'?'':'sec';
+  $('tabJames').className=wardTab==='james'?'':'sec';
+  $('tabAnnikka').className=wardTab==='annikka'?'':'sec';
+  const list=ITEMS.filter(i=>i.who===wardTab);
+  $('shop').innerHTML=WCATS.map(c=>{
+    const its=list.filter(i=>i.cat===c);
+    if(!its.length)return '';
+    return '<div class="section-title">'+c+'</div>'+its.map(it=>shopRow(it,now)).join('');
+  }).join('');
+  $('shop').querySelectorAll('[data-shop]').forEach(btn=>btn.onclick=()=>{
+    const id=btn.dataset.shop,it=ITEMS.find(s=>s.id===id);
+    if(!shop.owned.includes(id)){
+      if(!it.price||computeBones().now<it.price)return;
+      shop.owned.push(id);equipSlot(it);
+      toast(it.icon+' '+it.name+' purchased! '+(it.who==='dog'?'Buimeen is thrilled.':'Looking GOOD.'));confetti();
+    } else {
+      if(shop.equipped[id])delete shop.equipped[id];
+      else equipSlot(it);
+      if(it.who==='james')toast('😊 James: "How do I look?" (Great. He looks great.)');
+      if(it.who==='annikka')toast('💁🏻‍♀️ Annikka: "Obviously stunning, darling." ✨');
+    }
+    saveJ(K_SHOP,shop);renderAll();
+  });
+}
+function openWard(tab){wardTab=tab;renderShop(computeBones().now);$('wardModal').classList.add('show');}
+$('openDogWard').onclick=()=>openWard('dog');
+$('openMeWard').onclick=()=>openWard('me');
+$('openJWard').onclick=()=>openWard('james');
+$('openAWard').onclick=()=>openWard('annikka');
+$('tabDog').onclick=()=>{wardTab='dog';renderShop(computeBones().now);};
+$('tabMe').onclick=()=>{wardTab='me';renderShop(computeBones().now);};
+$('tabJames').onclick=()=>{wardTab='james';renderShop(computeBones().now);};
+$('tabAnnikka').onclick=()=>{wardTab='annikka';renderShop(computeBones().now);};
+$('wardClose').onclick=()=>$('wardModal').classList.remove('show');
+$('wardModal').onclick=e=>{if(e.target.id==='wardModal')$('wardModal').classList.remove('show')};
+
+/* ---------------- pack list ---------------- */
+function renderPack(){
+  const pals=[
+    ['you','🧑🏻📸','You','The one behind the camera, holding the whole frame together.'],
+    ['james','😊','James','13 years. Round happy face, the warmest smile. Your rock and your home.'],
+    ['annikka','💁🏻‍♀️✨','Annikka','Officially the pretty one (she checked). First responder on big waves.'],
+    ['sis','👩🏻','Your sister','Warm hugs that fix things. Hotpot powers.'],
+    ['bil','🧑🏻‍🦱','Bro-in-law','Quiet and steady. Says little, shows up always.'],
+    ['niece','👧🏻🎀','Your niece','Supercute Chief Morale Officer. Fridge-art department.'],
+    ['alvin','🧍🏻‍♂️','Alvin','Your brother. Allergic to mushy stuff, proud anyway.'],
+    ['fumei','🐻','Fumei','NOT an actual bear — just a big softie in his bear hoodie. Hugs non-refundable.'],
+    ['alvas','🧘🏻‍♂️','Alvas','Calm as a lake. Breathing coach. Supervises serenely.'],
+    ['buimeen','🐶','Buimeen','Bone accountant. Best boy. Tap his face up top for a woof.']
+  ];
+  $('packList').innerHTML=pals.map(p=>'<div class="pal" data-talk="'+p[0]+'"><div class="av">'+p[1]+'</div><div><b>'+p[2]+' 💬</b><span>'+p[3]+'</span></div></div>').join('');
+  $('packList').querySelectorAll('[data-talk]').forEach(el=>el.onclick=()=>charPopup(el.dataset.talk,packLine(el.dataset.talk),'✨ New line every day — come back tomorrow!'));
+}
+function renderCal(){
+  const c=$('cal');c.innerHTML='';const t=new Date();
+  for(let i=34;i>=0;i--){const d=new Date(t);d.setDate(t.getDate()-i);
+    const ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    const e=data[ds];const cell=document.createElement('div');
+    cell.className='cell '+(isOk(e)?'ok':e?'slip':'none')+(i===0?' now':'');
+    cell.textContent=isOk(e)?'🐾':d.getDate();
+    cell.onclick=()=>{$('date').value=ds;loadDay();window.scrollTo({top:$('date').getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});};
+    c.appendChild(cell);}
+}
+function renderHistory(){
+  const days=Object.keys(data).sort().reverse();
+  $('history').innerHTML= days.length? days.slice(0,40).map(ds=>{
+    const e=data[ds],ok=isOk(e);
+    const g=[e.g1,e.g2,e.g3].filter(x=>x&&x.trim());
+    const acts=(e.actions||[]).join(' + ');
+    return '<div class="hist"><div class="top"><b>'+fmt(ds)+'</b><span class="tag '+(ok?'ok':'slip')+'">'+(ok?'🐾 on track':'tough day 💛')+'</span></div>'+
+      '<div class="meta">mood '+e.mood+'/5 · urge '+e.craving+'/10'+(acts?' · '+acts:'')+(e.actionNote?' ('+e.actionNote+')':'')+(e.feeling?' · feeling: '+e.feeling:'')+' · +'+entryBones(e)+'🦴</div>'+
+      (g.length?'<div class="grat">💛 '+g.join(' · ')+'</div>':'')+
+      (e.journal&&e.journal.trim()?'<div class="jrnl">📓 '+e.journal.replace(/</g,'&lt;')+'</div>':'')+
+      (e.note?'<div class="note">'+e.note.replace(/</g,'&lt;')+'</div>':'')+
+      '<button class="danger" data-del="'+ds+'">delete</button></div>';
+  }).join('') : '<div class="meta">No entries yet — today is a lovely day one. 🐾</div>';
+  $('history').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(b.textContent!=='really delete?'){b.textContent='really delete?';setTimeout(()=>b.textContent='delete',2500);return}
+    delete data[b.dataset.del];saveJ(K_DATA,data);renderAll();toast('Entry removed.');});
+}
+function renderGrat(){
+  const days=Object.keys(data).sort().reverse();
+  const rows=days.map(ds=>{const g=[data[ds].g1,data[ds].g2,data[ds].g3].filter(x=>x&&x.trim());return g.length?'<div class="hist"><b>'+fmt(ds)+'</b><div class="grat">💛 '+g.join('<br>💛 ')+'</div></div>':''}).filter(Boolean);
+  $('gratList').innerHTML=rows.length?rows.join(''):'<div class="meta">Nothing yet — tonight\'s three tiny things will live here.</div>';
+}
+$('randomBtn').onclick=()=>{
+  const pool=Object.keys(data).filter(ds=>[data[ds].g1,data[ds].g2,data[ds].g3].some(x=>x&&x.trim()));
+  const box=$('randomBox');
+  if(!pool.length){box.style.display='block';box.textContent='No gratitude entries yet — add tonight\'s and future-you will thank you. 💛';return}
+  const ds=pool[Math.floor(Math.random()*pool.length)],e=data[ds];
+  box.style.display='block';
+  box.innerHTML='<b>'+fmt(ds)+'</b><br>💛 '+[e.g1,e.g2,e.g3].filter(x=>x&&x.trim()).join('<br>💛 ');
+};
+$('exportTxt').onclick=()=>{
+  let out='Buimeen gratitude journal\n\n';
+  Object.keys(data).sort().forEach(ds=>{const g=[data[ds].g1,data[ds].g2,data[ds].g3].filter(x=>x&&x.trim());if(g.length)out+=fmt(ds)+'\n - '+g.join('\n - ')+'\n\n'});
+  download('buimeen-gratitude.txt',out,'text/plain');
+};
+
+/* ---------------- check-in (7.0) ---------------- */
+const SC_OPTS=[
+ ['Meeting','🪑','+3🦴'],['Counselling / therapy','🛋️','+2🦴'],['Meditation','🧘','+2🦴'],['Praying','🙏','+2🦴'],
+ ['Reading','📖','+1🦴'],['Podcast / audio','🎧','+1🦴'],['Walk','🚶','+1🦴'],['Other','✨','+1🦴']
+];
+(function buildSC(){
+  $('scList').innerHTML=SC_OPTS.map(o=>
+    '<label class="mini sc"><input type="checkbox" class="scOpt" value="'+o[0]+'"> <div>'+o[1]+' '+o[0]+'<small>'+o[2]+'</small></div></label>').join('');
+  document.querySelectorAll('.scOpt').forEach(cb=>cb.addEventListener('change',updateScLimit));
+})();
+function updateScLimit(){
+  const boxes=[...document.querySelectorAll('.scOpt')];
+  const n=boxes.filter(b=>b.checked).length;
+  if(n>3){event&&event.target&&(event.target.checked=false);toast('Max 3 self-care actions per day 💛');return updateScLimit();}
+  boxes.forEach(b=>{b.disabled=(!b.checked&&n>=3)});
+  $('scCount').textContent='('+Math.min(n,3)+'/3)';
+}
+const HALT_TIPS={hH:'🍲 Hungry → eat something real, soon.',hA:'😤 Angry → 10 slow breaths, then tell someone.',hL:'🫥 Lonely → text James or a fellow. During, not after.',hT:'😴 Tired → a 20-min rest IS recovery work.',hS:'🌊 Stressed → 4-7-8 ×4, then one small task only.'};
+function updateHalts(){
+  const tips=Object.keys(HALT_TIPS).filter(id=>$(id).checked).map(id=>HALT_TIPS[id]);
+  const box=$('haltsTip');
+  if(tips.length){box.style.display='block';box.textContent=tips.join('\n');}
+  else box.style.display='none';
+}
+document.querySelectorAll('.hOpt').forEach(cb=>cb.addEventListener('change',updateHalts));
+const FEELINGS=['😊 Happy','😌 Calm','🙏 Grateful','🌈 Hopeful','💪 Confident','🥰 Loved','🤗 Connected','😄 Excited','🕊️ Peaceful','✨ Inspired','🎯 Motivated','😎 Proud','😅 Relieved','🧸 Comforted','🌱 Renewed','🔥 Determined','🤭 Playful','🦁 Courageous','🧘 Centered','🌤️ Optimistic','😐 Numb','😶 Empty','😴 Tired','🥱 Exhausted','😟 Worried','😰 Anxious','😖 Stressed','🌊 Overwhelmed','😢 Sad','💧 Tearful','🫥 Lonely','😠 Angry','😤 Frustrated','😒 Irritable','😳 Embarrassed','😔 Ashamed','😣 Guilty','😨 Scared','🫨 Restless','🥀 Disappointed','😕 Confused','🫤 Conflicted','💔 Hurt','🙃 Insecure','🥶 Vulnerable','🧩 Scattered','🌫️ Foggy','🏠 Homesick','📼 Nostalgic','⚖️ Mixed'];
+(function buildFeel(){
+  $('feeling').innerHTML='<option value="">How am I feeling today? (pick one of 50)</option>'+FEELINGS.map(f=>'<option>'+f+'</option>').join('');
+})();
+
+$('date').value=todayStr();
+function loadDay(){
+  const e=normEntry(data[$('date').value]||{});
+  ['p1','p2','p3','meds','ate','slept'].forEach(k=>$(k).checked=!!e[k]);
+  document.querySelectorAll('.scOpt').forEach(cb=>{cb.checked=(e.actions||[]).includes(cb.value);cb.disabled=false;});
+  updateScLimit();
+  $('actionNote').value=e.actionNote||'';
+  $('whoW').checked=e.who.w;$('whoH').checked=e.who.h;$('whoO').checked=e.who.o;
+  $('hH').checked=e.halts.h;$('hA').checked=e.halts.a;$('hL').checked=e.halts.l;$('hT').checked=e.halts.t;$('hS').checked=e.halts.s;
+  updateHalts();
+  $('g1').value=e.g1||'';$('g2').value=e.g2||'';$('g3').value=e.g3||'';
+  $('craving').value=e.craving??0;$('mood').value=e.mood??3;$('note').value=e.note||'';
+  $('feeling').value=e.feeling||'';$('journal').value=e.journal||'';
+  $('cravVal').textContent=$('craving').value;$('moodVal').textContent=$('mood').value;
+  annikkaLive(+$('craving').value);
+}
+$('date').onchange=loadDay;
+$('craving').oninput=()=>{$('cravVal').textContent=$('craving').value;annikkaLive(+$('craving').value)};
+$('mood').oninput=()=>$('moodVal').textContent=$('mood').value;
+$('save').onclick=()=>{
+  const ds=$('date').value;if(!ds)return;
+  const actions=[...document.querySelectorAll('.scOpt')].filter(b=>b.checked).map(b=>b.value).slice(0,3);
+  const e={p1:$('p1').checked,p2:$('p2').checked,p3:$('p3').checked,
+    meds:$('meds').checked,ate:$('ate').checked,slept:$('slept').checked,
+    actions:actions,actionNote:$('actionNote').value.trim(),
+    who:{w:$('whoW').checked,h:$('whoH').checked,o:$('whoO').checked},
+    halts:{h:$('hH').checked,a:$('hA').checked,l:$('hL').checked,t:$('hT').checked,s:$('hS').checked},
+    g1:$('g1').value.trim(),g2:$('g2').value.trim(),g3:$('g3').value.trim(),
+    craving:+$('craving').value,mood:+$('mood').value,note:$('note').value.trim(),
+    feeling:$('feeling').value,journal:$('journal').value.trim()};
+  data[ds]=normEntry(e);saveJ(K_DATA,data);
+  const bn=entryBones(data[ds]);
+  renderAll();
+  if(isOk(data[ds])){confetti();toast('🐾 On-track day saved! +'+bn+' 🦴 EXP'+(actions.includes('Meeting')?' (meeting bonus!)':actions.includes('Counselling / therapy')?' (counselling bonus!)':''));}
+  else{toast('Saved. +'+bn+' 🦴 for honesty. 💛');annikkaToughDay();}
+};
+$('clear').onclick=()=>{const ds=$('date').value;if(data[ds]){delete data[ds];saveJ(K_DATA,data);loadDay();renderAll();toast('Day cleared.')}};
+
+/* ---------------- backup / settings ---------------- */
+function download(name,content,type){
+  const blob=new Blob([content],{type});const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function doBackup(){
+  download('buimeen-backup-'+todayStr()+'.json',JSON.stringify({data,shop,gifts,gameLog},null,1),'application/json');
+  localStorage.setItem(K_BAK,Date.now());renderBackupInfo();toast('Backup saved 💾 Keep it somewhere safe!');
+}
+$('exportJson').onclick=doBackup;$('reminderBtn').onclick=doBackup;
+function importObj(j){
+  const d=j.data||j; let n=0;
+  for(const k in d){ if(/^\d{4}-\d{2}-\d{2}$/.test(k)){ data[k]=normEntry(d[k]); n++; } }
+  if(j.shop){shop=j.shop;shop.freebies=shop.freebies||[];shop.owned=shop.owned||[];shop.equipped=shop.equipped||{};}
+  if(j.gifts){gifts=j.gifts;gifts.mile=gifts.mile||[];}
+  if(j.gameLog){gameLog=j.gameLog;gameLog.days=gameLog.days||{};}
+  saveJ(K_DATA,data);saveJ(K_SHOP,shop);saveJ(K_GIFT,gifts);saveJ(K_GAME,gameLog);
+  return n;
+}
+$('importBtn').onclick=()=>$('importFile').click();
+$('importFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const n=importObj(JSON.parse(r.result));
+    renderAll();loadDay();toast('Imported '+n+' days 💛');
+  }catch(err){toast('Hmm, that file didn\'t parse. 🐾')}};
+  r.readAsText(f);e.target.value='';
+};
+$('importPasteBtn').onclick=()=>{
+  const t=$('importText').value.trim();
+  if(!t){toast('Paste your backup text in the box first 🐾');return}
+  try{
+    const n=importObj(JSON.parse(t));
+    renderAll();loadDay();$('importText').value='';
+    confetti();toast('Imported '+n+' days from pasted text 💛');
+  }catch(e){toast('Hmm — that text didn\'t parse. Make sure it\'s the complete backup 🐾');}
+};
+function renderBackupInfo(){
+  const last=+localStorage.getItem(K_BAK)||0;
+  $('backupInfo').textContent=last?('Last backup: '+new Date(last).toLocaleDateString()):'No backup saved yet on this device.';
+  const stale=!last||((Date.now()-last)/86400000>7);
+  $('reminder').style.display=stale?'block':'none';
+  $('reminderText').textContent=last?'It\'s been over a week since your last backup.':'You haven\'t saved a backup yet.';
+}
+$('changePin').onclick=()=>{localStorage.removeItem(K_PIN);pin='';mode='create1';lockApp();};
+$('lockNow').onclick=lockApp;
+$('resetAll').onclick=function(){
+  if(this.textContent!=='Tap again to erase everything'){this.textContent='Tap again to erase everything';setTimeout(()=>this.textContent='Erase everything',3000);return}
+  data={};shop={owned:[],equipped:{},freebies:[]};gifts={claimed:0,mile:[]};gameLog={days:{}};
+  saveJ(K_DATA,data);saveJ(K_SHOP,shop);saveJ(K_GIFT,gifts);saveJ(K_GAME,gameLog);localStorage.removeItem(K_LVL);
+  loadDay();renderAll();toast('Everything erased. Fresh page. 🐾');this.textContent='Erase everything';
+};
+
+/* ---------------- bottom nav ---------------- */
+document.querySelectorAll('#bnav button').forEach(b=>b.onclick=()=>{
+  const go=b.dataset.go;
+  if(go==='top')window.scrollTo({top:0,behavior:'smooth'});
+  else{const el=$(go);if(el)window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-10,behavior:'smooth'});}
+});
+
+/* ---------------- hero interactions ---------------- */
+$('dog').onclick=()=>{
+  const d=$('dog');d.classList.remove('bounce');void d.offsetWidth;d.classList.add('bounce');
+  smileDog();
+  toast(['Woof! 🐶','Woof woof! 🦴','WOOF! 💛','Woof~ 🐾'][Math.floor(Math.random()*4)]);
+};
+$('me').onclick=()=>{
+  const m=$('me');m.classList.remove('bounce');void m.offsetWidth;m.classList.add('bounce');
+  charPopup('you',YOU_LINES[Math.floor(Math.random()*YOU_LINES.length)]);
+};
+
+/* app icon */
+(function(){try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');
+x.fillStyle='#ffe9c7';x.fillRect(0,0,180,180);x.font='120px serif';x.textAlign='center';x.textBaseline='middle';x.fillText('🐶',90,98);
+$('touchIcon').href=c.toDataURL('image/png');}catch(e){}})();
+
+renderBuddy();
+loadDay();
+</script>
+</body>
+</html>
